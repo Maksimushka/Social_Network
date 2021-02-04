@@ -1,0 +1,14 @@
+.app-wrapper {
+  width: 1000px;
+  height: 1000px;
+  background-color: #e9ecf1;
+  margin: 70px auto 0;
+  font-family: "Tahoma", sans-serif;
+  line-height: 1.23;
+}
+
+.app-wrapper__content {
+  float: left;
+  width: 815px;
+  background-color: white;
+}

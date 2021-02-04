@@ -1,0 +1,32 @@
+.messages__item {
+    text-align: left;
+    padding-left: 10px;
+    padding-bottom: 10px;
+    position: relative;
+    margin-bottom: 10px;
+    font-size: 14px;
+    width: 200px;
+    height: 50px;
+    list-style-type: none;
+}
+
+.ava {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+}
+
+.name {
+    font-weight: bold;
+    font-size: 12.5px;
+    padding-left: 10px;
+    position: absolute;
+    color: #2a5da8;
+}
+
+.message {
+    position: absolute;
+    padding-left: 10px;
+    bottom: 10px;
+}
+

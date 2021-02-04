@@ -1,0 +1,71 @@
+.dialogs {
+    width: 815px;
+    height: 700px;
+}
+
+.dialogs__items {
+    width: 248px;
+    height: 100%;
+    border-right: 1px solid #e7e8ec;
+    display: inline-block;
+}
+
+.dialogs__items .active {
+    color: gold;
+}
+
+.messages {
+    display: inline-block;
+    position: absolute;
+    width: 550px;
+    height: 100%;
+    box-sizing: border-box;
+    padding: 15px 0 100px 15px;
+}
+
+.messages__item {
+    margin-bottom: 10px;
+}
+
+.dialog a {
+    text-decoration: none;
+    color: #ffffff;
+}
+
+.input {
+    margin-left: 248px;
+    background-color: #fafbfc;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 35px;
+    width: 567px;
+}
+
+.text {
+    border: 1px solid#e9ecf1;
+    border-radius: 5px;
+    resize: none;
+    width: 400px;
+    height: 35px;
+
+    padding-left: 10px;
+    padding-top: 7px;
+}
+
+.butt {
+    position: absolute;
+    background-color: #e9ecf1;
+    height: 35px;
+    border-radius: 5px;
+    margin-left: 7px;
+    width: 50px;
+}
+
+.butt:hover {
+    background-color: #E0E0E0;
+}
+
+.text:focus {
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+}
+

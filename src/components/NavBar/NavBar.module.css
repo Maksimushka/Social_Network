@@ -1,0 +1,32 @@
+.nav {
+    width: 140px;
+    background-color: #e9ecf1;
+    margin-right: 45px;
+    float: left;
+    height: 100%;
+}
+
+.list {
+    margin: 0;
+    padding: 0;
+    width: 140px;
+}
+
+.item {
+    list-style: none;
+    color: #2a5885;
+    width: 140px;
+    height: 28px;
+    padding-left: 20px;
+    border-radius: 2px;
+    padding-top: 5px;
+}
+
+.item:hover {
+    background-color: #E0E0E0;
+}
+
+a {
+    height: 28px;
+    text-decoration: none;
+}

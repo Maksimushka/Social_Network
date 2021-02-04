@@ -1,0 +1,31 @@
+.ava {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+}
+
+ a {
+    text-decoration: none;
+    color: black;
+}
+
+.dialog {
+    padding-top: 6px;
+    padding-bottom: 6px;
+    padding-left: 15px;
+    border-bottom: 1px solid #e7e8ec;
+    font-size: 13px;
+}
+
+.dialog:hover {
+    background-color: #DCDCDC;
+}
+
+a.active {
+    background-color: #486a8d;
+}
+
+.span {
+    margin-left: 10px;
+}
+
