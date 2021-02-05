@@ -1,16 +1,26 @@
 import React, {ChangeEvent, createRef} from 'react';
 import Post from './Post/Post';
 import s from './MyPosts.module.css';
-import {ProfilePageType} from "../../../Redux/state";
+import {AddPostType, PostsType} from "../../../Redux/state";
 
-const MyPosts = (props: ProfilePageType) => {
+type MyPostsPropsType = {
+    posts: PostsType[]
+    newPostText: string
+    updateNewPostText: (newText: string) => void
+    addPost: AddPostType
+}
+
+
+const MyPosts = (props: MyPostsPropsType) => {
 
     let postElement = props.posts.map(p => <Post id={p.id} message={p.message} likesCount={p.likesCount}/>)
 
     let addPost = () => {
+
         props.addPost(props.newPostText);
     }
     let onChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
+
         props.updateNewPostText(e.currentTarget.value)
     }
 

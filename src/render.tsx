@@ -1,11 +1,12 @@
-import {RootStateType, StoreType} from "./Redux/state";
+import store from "./Redux/state";
 import ReactDOM from "react-dom";
 import {BrowserRouter} from "react-router-dom";
 import App from "./App";
 import React from "react";
 
-export const rerenderEntireTree = (store: StoreType) => {
+
+export const rerenderEntireTree = () => {
     ReactDOM.render(
-        <BrowserRouter><App dialogsPage={store._state.dialogsPage} profilePage={store._state.profilePage}/></BrowserRouter>
+        <BrowserRouter><App store={store}/></BrowserRouter>
         , document.getElementById('root'));
 }
