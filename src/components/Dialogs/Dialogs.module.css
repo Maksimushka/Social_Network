@@ -33,12 +33,12 @@
 }
 
 .input {
-    margin-left: 248px;
+    position: absolute;
     background-color: #fafbfc;
     padding-top: 10px;
     padding-bottom: 10px;
-    padding-left: 35px;
-    width: 567px;
+    padding-left: 20px;
+    width: 527px;
 }
 
 .text {

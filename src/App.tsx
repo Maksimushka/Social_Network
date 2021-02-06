@@ -7,7 +7,7 @@ import Dialogs from "./components/Dialogs/Dialogs";
 import Music from "./components/Music/Music";
 import News from "./components/News/News";
 import Settings from "./components/Settings/Settings";
-import store, {RootStateType, StoreType} from "./Redux/state";
+import store, {StoreType} from "./Redux/state";
 import {Route} from 'react-router-dom';
 
 type PropsType = {
@@ -15,7 +15,6 @@ type PropsType = {
 }
 
 const App: React.FC<PropsType> = (props) => {
-    const state = props.store.getState();
 
     return (
         <div className='app'>
@@ -25,15 +24,16 @@ const App: React.FC<PropsType> = (props) => {
                 <div className='app-wrapper__content'>
                     <Route path='/profile'
                            render={() => <Profile updateNewPostText={props.store.updateNewPostText.bind(store)}
-                                                  newPostText={props.store._state.profilePage.newPostText}
                                                   addPost={props.store.addPost.bind(store)}
-                                                  posts={props.store._state.profilePage.posts}/>}/>
+                                                  newPostText={props.store._state.profilePage.newPostText}
+                                                  posts={props.store._state.profilePage.posts}/>}
+                    />
 
                     <Route path='/dialogs'
-                           render={() => <Dialogs addMessage={props.store.addMessage.bind(store)}
+                           render={() => <Dialogs updateNewMessageText={props.store.updateNewMessageText.bind(store)}
+                                                  addMessage={props.store.addMessage.bind(store)}
                                                   dialogs={props.store._state.dialogsPage.dialogs}
                                                   newMessageText={props.store._state.dialogsPage.newMessageText}
-                                                  updateNewMessageText={props.store.updateNewMessageText.bind(store)}
                                                   messages={props.store._state.dialogsPage.messages}/>}/>
                     <Route path='/news' render={() => <News/>}/>
                     <Route path='/music' render={() => <Music/>}/>
