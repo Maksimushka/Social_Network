@@ -25,19 +25,45 @@ export type RootStateType = {
     dialogsPage: DialogsPageType
 }
 export type AddPostType = (postMessage: string | undefined) => void
-export type AddMessageType = (MessageValue: any) => void
+export type AddMessageType = (MessageValue: string) => void
+export type ActionsTypes = ReturnType<typeof updateNewPostText> | ReturnType<typeof addPostAC> |
+    ReturnType<typeof addMessageAC> | ReturnType<typeof updateNewMessageText>
 export type StoreType = {
     _state: RootStateType
     _onChange: () => void
-    updateNewPostText: (newText: string) => void
-    addPost: AddPostType
-    updateNewMessageText: (newText: string) => void
-    addMessage: AddMessageType
+    _updateNewPostText: (newText: string) => void
+    _addPost: AddPostType
+    _updateNewMessageText: (newText: string) => void
+    _addMessage: AddMessageType
     subscribe: (callback: () => void ) => void
     getState: () => RootStateType
-    dispatch: () => void
+    dispatch: (action: ActionsTypes) => void
 }
 
+export const addPostAC = (postText: string) => {
+    return {
+        type: "ADD-POST",
+        postText: postText
+    } as const
+}
+export const updateNewPostText = (newText: string) => {
+    return {
+        type: "UPDATE-NEW-POST-TEXT",
+        newText: newText
+    } as const
+}
+export const addMessageAC = (messageText: string) => {
+    return {
+        type: "ADD-MESSAGE",
+        messageText: messageText
+    } as const
+}
+export const updateNewMessageText = (newText: string) => {
+    return {
+        type: "UPDATE-NEW-MESSAGE-TEXT",
+        newText: newText
+    } as const
+}
 
 const store: StoreType = {
     _state: {
@@ -65,23 +91,23 @@ const store: StoreType = {
             newMessageText: "",
         },
     },
-    updateNewPostText(newText:string) {
+    _updateNewPostText(newText:string) {
         this._state.profilePage.newPostText = newText
         this._onChange()
     },
-    addPost(postMessage: any) {
-        let newPost = { id: 5,  message: postMessage,  likesCount: 0 }
+    _addPost(postMessage: any) {
+        let newPost = { id: new Date().getTime(),  message: postMessage,  likesCount: 0 }
         this._state.profilePage.posts.push(newPost)
         this._state.profilePage.newPostText = ""
         this._onChange()
     },
-    addMessage(MessageValue: any) {
+    _addMessage(MessageValue: any) {
         let newMessage = { id: 4,  message: MessageValue }
         this._state.dialogsPage.messages.push(newMessage)
         this._state.dialogsPage.newMessageText = ""
         this._onChange()
     },
-    updateNewMessageText(newText) {
+    _updateNewMessageText(newText) {
         this._state.dialogsPage.newMessageText = newText
         this._onChange()
     },
@@ -97,13 +123,13 @@ const store: StoreType = {
 
     dispatch(action) {
         if (action.type === "ADD-POST") {
-            let newPost = { id: 5,  message: postMessage,  likesCount: 0 }
-            this._state.profilePage.posts.push(newPost)
-            this._state.profilePage.newPostText = ""
-            this._onChange()
+            this._addPost(action.postText)
         } else if (action.type === "UPDATE-NEW-POST-TEXT") {
-            this._state.profilePage.newPostText = newText
-            this._onChange()
+            this._updateNewPostText(action.newText)
+        } else if (action.type === "ADD-MESSAGE") {
+            this._addMessage(action.messageText)
+        } else if (action.type === "UPDATE-NEW-MESSAGE-TEXT") {
+            this._updateNewMessageText(action.newText)
         }
     }
 }
