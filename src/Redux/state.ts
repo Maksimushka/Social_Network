@@ -1,3 +1,6 @@
+import {profileReducer} from "./profile-reducer";
+import {dialogsReducer} from "./dialogs-reducer";
+
 export type PostsType = {
     id: number
     message: string
@@ -24,7 +27,7 @@ export type RootStateType = {
     profilePage: ProfilePageType
     dialogsPage: DialogsPageType
 }
-export type AddPostType = (postMessage: string | undefined) => void
+export type AddPostType = (postMessage: string) => void
 export type AddMessageType = (MessageValue: string) => void
 export type ActionsTypes = ReturnType<typeof updateNewPostText> | ReturnType<typeof addPostAC> |
     ReturnType<typeof addMessageAC> | ReturnType<typeof updateNewMessageText>
@@ -95,13 +98,13 @@ const store: StoreType = {
         this._state.profilePage.newPostText = newText
         this._onChange()
     },
-    _addPost(postMessage: any) {
+    _addPost(postMessage: string) {
         let newPost = { id: new Date().getTime(),  message: postMessage,  likesCount: 0 }
         this._state.profilePage.posts.push(newPost)
         this._state.profilePage.newPostText = ""
         this._onChange()
     },
-    _addMessage(MessageValue: any) {
+    _addMessage(MessageValue: string) {
         let newMessage = { id: 4,  message: MessageValue }
         this._state.dialogsPage.messages.push(newMessage)
         this._state.dialogsPage.newMessageText = ""
@@ -122,15 +125,8 @@ const store: StoreType = {
     },
 
     dispatch(action) {
-        if (action.type === "ADD-POST") {
-            this._addPost(action.postText)
-        } else if (action.type === "UPDATE-NEW-POST-TEXT") {
-            this._updateNewPostText(action.newText)
-        } else if (action.type === "ADD-MESSAGE") {
-            this._addMessage(action.messageText)
-        } else if (action.type === "UPDATE-NEW-MESSAGE-TEXT") {
-            this._updateNewMessageText(action.newText)
-        }
+        profileReducer(store, action)
+        dialogsReducer(store, action)
     }
 }
 
