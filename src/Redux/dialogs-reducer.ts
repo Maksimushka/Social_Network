@@ -1,12 +1,40 @@
-import {ActionsTypes, StoreType} from "./state";
+import {ActionsTypes, DialogsPageType} from "./state";
 
-export const dialogsReducer = (store: StoreType, action: ActionsTypes) => {
+export const addMessageAC = (messageText: string) => {
+    return {
+        type: "ADD-MESSAGE",
+        messageText: messageText
+    } as const
+}
+export const updateNewMessageText = (newText: string) => {
+    return {
+        type: "UPDATE-NEW-MESSAGE-TEXT",
+        newText: newText
+    } as const
+}
 
-    if (action.type === "ADD-MESSAGE") {
-        store._addMessage(action.messageText)
-    } else if (action.type === "UPDATE-NEW-MESSAGE-TEXT") {
-        store._updateNewMessageText(action.newText)
+export const dialogsReducer = (state: DialogsPageType, action: ActionsTypes) => {
+
+    switch (action.type) {
+        case "ADD-MESSAGE":
+            let newMessage = { id: 4,  message: action.messageText }
+            state.messages.push(newMessage)
+            state.newMessageText = ""
+            break
+        case "UPDATE-NEW-MESSAGE-TEXT":
+            state.newMessageText = action.newText
+            break
+        default :
+            return state
     }
 
-    return store
+    // if (action.type === "ADD-MESSAGE") {
+    //     let newMessage = { id: 4,  message: action.messageText }
+    //     state.messages.push(newMessage)
+    //     state.newMessageText = ""
+    // } else if (action.type === "UPDATE-NEW-MESSAGE-TEXT") {
+    //     state.newMessageText = action.newText
+    // }
+
+    return state
 }
