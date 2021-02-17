@@ -13,7 +13,7 @@ type MyPostsPropsType = {
 
 const MyPosts = (props: MyPostsPropsType) => {
 
-    let postElement = props.posts.map(p => <Post id={p.id} message={p.message} likesCount={p.likesCount}/>)
+    let postElement = props.posts.map(p => <Post key={p.id} id={p.id} message={p.message} likesCount={p.likesCount}/>)
 
     let addPost = () => { props.addPost() }
     let onChange = (e: ChangeEvent<HTMLTextAreaElement>) => {

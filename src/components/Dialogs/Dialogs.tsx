@@ -21,8 +21,8 @@ const Dialogs = (props: DialogsPropsType) =>  {
         props.changeTextMessage(e.currentTarget.value)
     }
 
-    let dialogsElement = props.dialogs.map( d => <DialogItem name={d.name} id={d.id} /> )
-    let messageElement = props.messages.map( m => <MessageItem id={m.id} message={m.message} /> )
+    let dialogsElement = props.dialogs.map( d => <DialogItem key={d.id} name={d.name} id={d.id} /> )
+    let messageElement = props.messages.map( m => <MessageItem key={m.id} id={m.id} message={m.message} /> )
 
     return (
         <div className={s.dialogs}>
