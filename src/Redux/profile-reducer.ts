@@ -1,15 +1,23 @@
 import {ActionsTypes, ProfilePageType} from "./state";
 
-export const addPostAC = () => {
+export type addPostACType = {
+    type: "ADD-POST"
+}
+export type updateNewPostTextACType = {
+    type: "UPDATE-NEW-POST-TEXT",
+    newText: string
+}
+
+export const addPostAC = (): addPostACType => {
     return {
         type: "ADD-POST"
-    } as const
+    }
 }
-export const updateNewPostText = (newText: string) => {
+export const updateNewPostText = (newText: string): updateNewPostTextACType => {
     return {
         type: "UPDATE-NEW-POST-TEXT",
         newText: newText
-    } as const
+    }
 }
 
 let initialState = {

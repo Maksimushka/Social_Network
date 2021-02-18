@@ -2,19 +2,26 @@ import React from 'react'
 import {connect} from "react-redux";
 import {Users} from "./Users";
 import {followAC, setUsersAC, unFollowAC, UserReducerType} from "../../Redux/users-reducer";
+import {RootStateReduxType} from "../../Redux/redux-store";
+import {Dispatch} from "redux";
+import {ActionsTypes} from "../../Redux/state";
 
+type MapStateToPropsType = {
+    users: UserReducerType[]
+}
+type MapDispatchToPropsType = {
+    follow: (userID: number) => void
+    unFollow: (userID: number) => void
+    setUsers: (users: UserReducerType[]) => void
+}
 
-let mapStateToProps = (state: any) => {
+let mapStateToProps = (state: RootStateReduxType) => {
     return {
         users: state.usersPage.users
     }
 }
 
-// setUsers: (users: UserReducerType[]) => void
-//     follow: (userID: number) => void
-//     unFollow: (userID: number) => void
-
-let mapDispatchToProps = (dispatch: any) => {
+let mapDispatchToProps = (dispatch: Dispatch<ActionsTypes>) => {
     return {
         follow: (userID: number) => {
             dispatch( followAC(userID) )
@@ -28,6 +35,6 @@ let mapDispatchToProps = (dispatch: any) => {
     }
 }
 
-const UsersContainer = connect(mapStateToProps, mapDispatchToProps)(Users)
+const UsersContainer = connect<MapStateToPropsType, MapDispatchToPropsType, {}, RootStateReduxType>(mapStateToProps, mapDispatchToProps)(Users)
 
 export default UsersContainer

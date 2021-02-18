@@ -14,36 +14,42 @@ export type UserReducerType = {
 export type UsersReducerStateType = {
     users: UserReducerType[]
 }
+export type FollowACType = {
+    type: "FOLLOW"
+    userId: number
+}
+export type unFollowACType = {
+    type: "UNFOLLOW"
+    userId: number
+}
+export type setUsersACType = {
+    type: "SET_USERS"
+    users: UserReducerType[]
+}
 
-export const followAC = (userId: number) => {
+export const followAC = (userId: number): FollowACType => {
     return {
         type: "FOLLOW",
         userId: userId
-    } as const
+    }
 }
-export const unFollowAC = (userId: number) => {
+export const unFollowAC = (userId: number): unFollowACType => {
     return {
         type: "UNFOLLOW",
         userId: userId
-    } as const
+    }
 }
-export const setUsersAC = (users: UserReducerType[]) => {
+export const setUsersAC = (users: UserReducerType[]): setUsersACType => {
     return {
         type: "SET_USERS",
         users: users
-    } as const
+    }
 }
 
 let initialState:UsersReducerStateType  = {
     users: []
 }
 
-
-
-// export type UsersReducerPageType = {
-//     usersPage: (state: UsersReducerStateType, action: ActionsTypes) => void
-//     users: UsersReducerStateType
-// }
 
 export const usersReducer = (state = initialState, action: ActionsTypes): UsersReducerStateType => {
 
@@ -53,9 +59,7 @@ export const usersReducer = (state = initialState, action: ActionsTypes): UsersR
                 ...state,
                 users: state.users.map( u => {
                         if (u.id === action.userId) {
-                        return {
-                            ...u, followed: true
-                        }
+                        return { ...u, followed: true }
                     }
                     return u
                 })
@@ -65,9 +69,7 @@ export const usersReducer = (state = initialState, action: ActionsTypes): UsersR
                 ...state,
                 users: state.users.map( u => {
                     if (u.id === action.userId) {
-                        return {
-                            ...u, followed: false
-                        }
+                        return { ...u, followed: false }
                     }
                     return u
                 })

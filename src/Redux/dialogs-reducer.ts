@@ -1,15 +1,23 @@
 import {ActionsTypes, DialogsPageType} from "./state";
 
-export const addMessageAC = () => {
+export type addMessageACType = {
+    type: "ADD-MESSAGE"
+}
+export type updateNewMessageTextACType = {
+    type: "UPDATE-NEW-MESSAGE-TEXT",
+    newText: string
+}
+
+export const addMessageAC = (): addMessageACType => {
     return {
         type: "ADD-MESSAGE"
-    } as const
+    }
 }
-export const updateNewMessageText = (newText: string) => {
+export const updateNewMessageText = (newText: string): updateNewMessageTextACType => {
     return {
         type: "UPDATE-NEW-MESSAGE-TEXT",
         newText: newText
-    } as const
+    }
 }
 
 let initialState = {

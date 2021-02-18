@@ -1,7 +1,6 @@
 import {combineReducers, createStore } from "redux";
 import {profileReducer} from "./profile-reducer";
 import {dialogsReducer} from "./dialogs-reducer";
-import {DialogsPageType, ProfilePageType} from "./state";
 import {usersReducer} from "./users-reducer";
 
 let reducers = combineReducers({
@@ -10,9 +9,7 @@ let reducers = combineReducers({
     usersPage: usersReducer
 })
 
-export type ReducersType = {
-    profilePage: ProfilePageType
-    dialogsPage: DialogsPageType
-}
+export type RootStateReduxType = ReturnType<typeof reducers>
+
 
 export let store = createStore(reducers)
