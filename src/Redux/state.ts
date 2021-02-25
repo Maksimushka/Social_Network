@@ -1,4 +1,4 @@
-import {followAC, FollowACType, setUsersAC, setUsersACType, unFollowAC, unFollowACType} from "./users-reducer";
+import {FollowACType, setCurrentPageACType, setUsersACType, setUsersCountACType, unFollowACType} from './users-reducer';
 import {addPostACType, updateNewPostTextACType} from "./profile-reducer";
 import {addMessageACType, updateNewMessageTextACType} from "./dialogs-reducer";
 
@@ -29,8 +29,8 @@ export type RootStateType = {
     dialogsPage: DialogsPageType
 }
 export type ActionsTypes = setUsersACType | FollowACType | unFollowACType |
-    updateNewPostTextACType | addPostACType |
-    updateNewMessageTextACType | addMessageACType
+    updateNewPostTextACType | addPostACType | updateNewMessageTextACType
+    | addMessageACType | setCurrentPageACType | setUsersCountACType
 
 
 export type StoreType = {

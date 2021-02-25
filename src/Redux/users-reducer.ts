@@ -4,15 +4,18 @@ export type UserReducerType = {
     id: number
     name: string
     followed: boolean
-    status: string
-    photoURL: string
-    location: {
-        city: string
-        country: string
+    status: null
+    uniqueUrlName: null
+    photos: {
+        small: null
+        large: null
     }
 }
 export type UsersReducerStateType = {
     users: UserReducerType[]
+    pageSize: number
+    totalUsersCount: number
+    currentPage: number
 }
 export type FollowACType = {
     type: "FOLLOW"
@@ -26,33 +29,24 @@ export type setUsersACType = {
     type: "SET_USERS"
     users: UserReducerType[]
 }
-
-export const followAC = (userId: number): FollowACType => {
-    return {
-        type: "FOLLOW",
-        userId: userId
-    }
+export type setCurrentPageACType = {
+    type: 'SET_CURRENT_PAGE'
+    currentPage: number
 }
-export const unFollowAC = (userId: number): unFollowACType => {
-    return {
-        type: "UNFOLLOW",
-        userId: userId
-    }
-}
-export const setUsersAC = (users: UserReducerType[]): setUsersACType => {
-    return {
-        type: "SET_USERS",
-        users: users
-    }
+export type setUsersCountACType = {
+    type: 'SET_USERS_COUNT'
+    usersCount: number
 }
 
 let initialState:UsersReducerStateType  = {
-    users: []
+    users: [],
+    pageSize: 5,
+    totalUsersCount: 23,
+    currentPage: 1,
 }
 
 
 export const usersReducer = (state = initialState, action: ActionsTypes): UsersReducerStateType => {
-
     switch (action.type) {
         case "FOLLOW":
             return {
@@ -77,10 +71,52 @@ export const usersReducer = (state = initialState, action: ActionsTypes): UsersR
         case "SET_USERS":
             return {
                 ...state,
-                users: [...state.users, ...action.users]
+                users: action.users
             }
+        case 'SET_CURRENT_PAGE': {
+            return {
+                ...state,
+                currentPage: action.currentPage
+            }
+        }
+        case 'SET_USERS_COUNT': {
+            return {
+                ...state,
+                totalUsersCount: action.usersCount
+            }
+        }
         default:
             return state
     }
+}
 
+export const followAC = (userId: number): FollowACType => {
+    return {
+        type: "FOLLOW",
+        userId: userId
+    }
+}
+export const unFollowAC = (userId: number): unFollowACType => {
+    return {
+        type: "UNFOLLOW",
+        userId: userId
+    }
+}
+export const setUsersAC = (users: UserReducerType[]): setUsersACType => {
+    return {
+        type: "SET_USERS",
+        users: users
+    }
+}
+export const setCurrentPageAC = (currentPage: number): setCurrentPageACType => {
+    return {
+        type: 'SET_CURRENT_PAGE',
+        currentPage: currentPage
+    }
+}
+export const setUsersCountAC = (usersCount: number): setUsersCountACType => {
+    return {
+        type: 'SET_USERS_COUNT',
+        usersCount: usersCount
+    }
 }
