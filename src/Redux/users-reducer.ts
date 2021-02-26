@@ -16,6 +16,7 @@ export type UsersReducerStateType = {
     pageSize: number
     totalUsersCount: number
     currentPage: number
+    isFetching: boolean
 }
 export type FollowACType = {
     type: "FOLLOW"
@@ -37,14 +38,18 @@ export type setUsersCountACType = {
     type: 'SET_USERS_COUNT'
     usersCount: number
 }
+export type setIsFetchingACType = {
+    type: 'SET_IS_FETCHING'
+    isFetching: boolean
+}
 
 let initialState:UsersReducerStateType  = {
     users: [],
     pageSize: 5,
     totalUsersCount: 23,
+    isFetching: true,
     currentPage: 1,
 }
-
 
 export const usersReducer = (state = initialState, action: ActionsTypes): UsersReducerStateType => {
     switch (action.type) {
@@ -85,38 +90,21 @@ export const usersReducer = (state = initialState, action: ActionsTypes): UsersR
                 totalUsersCount: action.usersCount
             }
         }
+        case 'SET_IS_FETCHING': {
+            return {
+                ...state,
+                isFetching: action.isFetching
+            }
+        }
         default:
             return state
     }
 }
 
-export const followAC = (userId: number): FollowACType => {
-    return {
-        type: "FOLLOW",
-        userId: userId
-    }
-}
-export const unFollowAC = (userId: number): unFollowACType => {
-    return {
-        type: "UNFOLLOW",
-        userId: userId
-    }
-}
-export const setUsersAC = (users: UserReducerType[]): setUsersACType => {
-    return {
-        type: "SET_USERS",
-        users: users
-    }
-}
-export const setCurrentPageAC = (currentPage: number): setCurrentPageACType => {
-    return {
-        type: 'SET_CURRENT_PAGE',
-        currentPage: currentPage
-    }
-}
-export const setUsersCountAC = (usersCount: number): setUsersCountACType => {
-    return {
-        type: 'SET_USERS_COUNT',
-        usersCount: usersCount
-    }
-}
+export const followAC = (userId: number): FollowACType =>  ( {type: "FOLLOW", userId: userId} )
+export const unFollowAC = (userId: number): unFollowACType => ( {type: "UNFOLLOW", userId: userId} )
+export const setUsersAC = (users: UserReducerType[]): setUsersACType => ({ type: "SET_USERS", users: users} )
+export const setCurrentPageAC = (currentPage: number): setCurrentPageACType => ({ type: 'SET_CURRENT_PAGE', currentPage: currentPage} )
+export const setUsersCountAC = (usersCount: number): setUsersCountACType => ({ type: 'SET_USERS_COUNT', usersCount: usersCount} )
+export const setIsFetchingAC = (isFetching: boolean): setIsFetchingACType => ({ type: 'SET_IS_FETCHING', isFetching: isFetching} )
+

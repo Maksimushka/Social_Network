@@ -60,3 +60,11 @@
 .selectedPage {
     font-weight: bold;
 }
+
+.imgLoad {
+    text-align: center;
+    width: 400px;
+    height: 800px;
+    padding-top: 380px;
+    margin: 0 auto;
+}
