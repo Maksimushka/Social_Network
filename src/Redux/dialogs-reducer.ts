@@ -8,18 +8,6 @@ export type updateNewMessageTextACType = {
     newText: string
 }
 
-export const addMessageAC = (): addMessageACType => {
-    return {
-        type: "ADD-MESSAGE"
-    }
-}
-export const updateNewMessageText = (newText: string): updateNewMessageTextACType => {
-    return {
-        type: "UPDATE-NEW-MESSAGE-TEXT",
-        newText: newText
-    }
-}
-
 let initialState = {
     dialogs: [
         {name: "Dimych", id: 1 },
@@ -59,3 +47,5 @@ export const dialogsReducer = (state: DialogsPageType  = initialState, action: A
             return state
     }
 }
+export const addMessageAC = (): addMessageACType => ( { type: "ADD-MESSAGE" } )
+export const updateNewMessageText = (newText: string): updateNewMessageTextACType => ( { type: "UPDATE-NEW-MESSAGE-TEXT", newText: newText } )

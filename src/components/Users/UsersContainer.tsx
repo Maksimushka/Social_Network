@@ -1,20 +1,11 @@
 import React from 'react'
 import {connect} from "react-redux";
 import {
-    followAC,
-    setCurrentPageAC, setIsFetchingAC,
-    setUsersAC,
-    setUsersCountAC,
-    unFollowAC,
-    UserReducerType
+    followAC, setCurrentPageAC, setIsFetchingAC, setUsersAC, setUsersCountAC, unFollowAC, UserReducerType
 } from '../../Redux/users-reducer';
 import {RootStateReduxType} from "../../Redux/redux-store";
-import {Dispatch} from "redux";
-import {ActionsTypes} from "../../Redux/state";
 import axios from 'axios';
 import Users from './Users.';
-import loading from './../../assets/svg-loaders/three-dots.svg'
-import s from './Users.module.css'
 import {Preloader} from '../common/Preloader/Preloader';
 
 type MapStateToPropsType = {
@@ -100,29 +91,14 @@ let mapStateToProps = (state: RootStateReduxType) => {
     }
 }
 
-let mapDispatchToProps = (dispatch: Dispatch<ActionsTypes>) => {
-    return {
-        follow: (userID: number) => {
-            dispatch( followAC(userID) )
-        },
-        unFollow: (userID: number) => {
-            dispatch( unFollowAC(userID) )
-        },
-        setUsers: (users: UserReducerType[]) => {
-            dispatch( setUsersAC(users) )
-        },
-        setUsersCount: (usersCount: number) => {
-            dispatch( setUsersCountAC(usersCount) )
-        },
-        setIsFetching: (isFetching: boolean) => {
-            dispatch( setIsFetchingAC(isFetching) )
-        },
-        setCurrentPage: (currentPage: number) => {
-            dispatch( setCurrentPageAC(currentPage) )
-        }
-    }
-}
-
-const UsersContainer = connect<MapStateToPropsType, MapDispatchToPropsType, {}, RootStateReduxType>(mapStateToProps, mapDispatchToProps)(UsersAPIComponent)
+const UsersContainer = connect <MapStateToPropsType, MapDispatchToPropsType, {}, RootStateReduxType>
+(mapStateToProps, {
+    follow: followAC,
+    unFollow: unFollowAC,
+    setUsers: setUsersAC,
+    setUsersCount: setUsersCountAC,
+    setIsFetching: setIsFetchingAC,
+    setCurrentPage: setCurrentPageAC
+})(UsersAPIComponent)
 
 export default UsersContainer
