@@ -4,19 +4,15 @@ import {
     setIsFetchingACType,
     setUsersACType,
     setUsersCountACType,
-    unFollowACType
+    unFollowACType, UsersReducerStateType
 } from './users-reducer';
-import {addPostACType, updateNewPostTextACType} from "./profile-reducer";
+import {addPostACType, ProfilePageType, setUserProfileACType, updateNewPostTextACType} from './profile-reducer';
 import {addMessageACType, updateNewMessageTextACType} from "./dialogs-reducer";
 
 export type PostsType = {
     id: number
     message: string
     likesCount: number
-}
-export type ProfilePageType = {
-    posts: Array<PostsType>
-    newPostText: string
 }
 export type MessagesType = {
     id: number
@@ -34,11 +30,12 @@ export type DialogsPageType = {
 export type RootStateType = {
     profilePage: ProfilePageType
     dialogsPage: DialogsPageType
+    usersPage: UsersReducerStateType
 }
 export type ActionsTypes = setUsersACType | FollowACType | unFollowACType |
     updateNewPostTextACType | addPostACType | updateNewMessageTextACType
     | addMessageACType | setCurrentPageACType | setUsersCountACType |
-    setIsFetchingACType
+    setIsFetchingACType | setUserProfileACType
 
 
 export type StoreType = {
