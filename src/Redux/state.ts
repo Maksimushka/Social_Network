@@ -8,6 +8,7 @@ import {
 } from './users-reducer';
 import {addPostACType, ProfilePageType, setUserProfileACType, updateNewPostTextACType} from './profile-reducer';
 import {addMessageACType, updateNewMessageTextACType} from "./dialogs-reducer";
+import {setUserDataACType, setUserPhotoACType} from './auth-reducer';
 
 export type PostsType = {
     id: number
@@ -35,7 +36,7 @@ export type RootStateType = {
 export type ActionsTypes = setUsersACType | FollowACType | unFollowACType |
     updateNewPostTextACType | addPostACType | updateNewMessageTextACType
     | addMessageACType | setCurrentPageACType | setUsersCountACType |
-    setIsFetchingACType | setUserProfileACType
+    setIsFetchingACType | setUserProfileACType | setUserDataACType | setUserPhotoACType
 
 
 export type StoreType = {

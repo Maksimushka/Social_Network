@@ -3,6 +3,7 @@ import s from './Users.module.css';
 import userPhoto from '../../assets/img/user.png';
 import {UserReducerType} from '../../Redux/users-reducer';
 import { NavLink } from 'react-router-dom';
+import axios from 'axios';
 
 type UsersPropsType = {
     users: UserReducerType[]
@@ -33,10 +34,28 @@ let Users = (props: UsersPropsType) => {
             {
                 props.users.map(us => {
                     let onFollowHandler = () => {
-                        props.follow(us.id)
+                        axios.post(`https://social-network.samuraijs.com/api/1.0/follow/${us.id}`, {}, {
+                            withCredentials: true,
+                            headers: {
+                                'API-KEY': '0c7f7a4d-ffbe-4143-a04f-3a08c1c80984'
+                            }
+                        }).then(response => {
+                            if (response.data.resultCode === 0) {
+                                props.follow(us.id)
+                            }
+                        })
                     }
                     let onUnFollowHandler = () => {
-                        props.unFollow(us.id)
+                        axios.delete(`https://social-network.samuraijs.com/api/1.0/follow/${us.id}`, {
+                            withCredentials: true,
+                            headers: {
+                                'API-KEY': '0c7f7a4d-ffbe-4143-a04f-3a08c1c80984'
+                            }
+                        }).then(response => {
+                            if (response.data.resultCode === 0) {
+                                props.unFollow(us.id)
+                            }
+                        })
                     }
 
                     return (<div className={s.user} key={us.id}>
@@ -50,8 +69,10 @@ let Users = (props: UsersPropsType) => {
                             </div>
                             <div>
                                 {us.followed
-                                    ? <button onClick={onUnFollowHandler}>Unfollow</button>
-                                    : <button onClick={onFollowHandler}>Follow</button>}
+                                    ? <button
+                                        onClick={onUnFollowHandler}>Unfollow</button>
+                                    : <button
+                                        onClick={onFollowHandler}>Follow</button>}
                             </div>
                         </div>
                         <div className={s.userDescription}>

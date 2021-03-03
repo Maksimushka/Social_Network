@@ -24,7 +24,7 @@ export type userProfileType = {
 export type ProfilePageType = {
     posts: Array<PostsType>
     newPostText: string
-    profile: any
+    profile: userProfileType | null
 }
 export type addPostACType = {
     type: "ADD-POST"

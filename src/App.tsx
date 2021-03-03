@@ -9,12 +9,13 @@ import {Route} from 'react-router-dom';
 import DialogsContainer from "./components/Dialogs/DialogsContainer";
 import UsersContainer from "./components/Users/UsersContainer";
 import ProfileContainer from './components/Profile/Profile.container';
+import HeaderContainer from './components/Header/HeaderContainer';
 
 
 const App = () => {
     return (
         <div className='app'>
-            <Header/>
+            <HeaderContainer />
             <div className='app-wrapper'>
                 <NavBar/>
                 <div className='app-wrapper__content'>

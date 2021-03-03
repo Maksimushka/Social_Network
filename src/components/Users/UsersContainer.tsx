@@ -40,7 +40,9 @@ type UsersAPIPropsType = {
 class UsersAPIComponent extends React.Component<UsersAPIPropsType, any> {
 
     getState = () => {
-            axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.pageSize}`).then(response => {
+            axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.pageSize}`, {
+                withCredentials: true
+            }).then(response => {
                 this.props.setIsFetching(false)
                 this.props.setUsers(response.data.items)
                 this.props.setUsersCount(response.data.totalCount)
@@ -53,7 +55,9 @@ class UsersAPIComponent extends React.Component<UsersAPIPropsType, any> {
     onChangePage = (currentPage: number) => {
         this.props.setCurrentPage(currentPage)
         this.props.setIsFetching(true)
-        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${currentPage}&count=${this.props.pageSize}`).then(response => {
+        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${currentPage}&count=${this.props.pageSize}`, {
+            withCredentials: true
+        }).then(response => {
             this.props.setIsFetching(false)
             this.props.setUsers(response.data.items)
         })
