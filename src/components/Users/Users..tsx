@@ -3,7 +3,7 @@ import s from './Users.module.css';
 import userPhoto from '../../assets/img/user.png';
 import {UserReducerType} from '../../Redux/users-reducer';
 import { NavLink } from 'react-router-dom';
-import axios from 'axios';
+import {followAPI} from '../../api/api';
 
 type UsersPropsType = {
     users: UserReducerType[]
@@ -18,9 +18,7 @@ type UsersPropsType = {
 let Users = (props: UsersPropsType) => {
     let pagesCount = Math.ceil(props.totalUsersCount / props.pageSize)
     let pages = []
-    for (let i = 1; i <= pagesCount; i++) {
-        pages.push(i)
-    }
+    for (let i = 1; i <= pagesCount; i++) { pages.push(i) }
     return (
         <div>
             <div>
@@ -34,25 +32,15 @@ let Users = (props: UsersPropsType) => {
             {
                 props.users.map(us => {
                     let onFollowHandler = () => {
-                        axios.post(`https://social-network.samuraijs.com/api/1.0/follow/${us.id}`, {}, {
-                            withCredentials: true,
-                            headers: {
-                                'API-KEY': '0c7f7a4d-ffbe-4143-a04f-3a08c1c80984'
-                            }
-                        }).then(response => {
-                            if (response.data.resultCode === 0) {
+                        followAPI.follow(us.id).then(response => {
+                            if (response.resultCode === 0) {
                                 props.follow(us.id)
                             }
                         })
                     }
                     let onUnFollowHandler = () => {
-                        axios.delete(`https://social-network.samuraijs.com/api/1.0/follow/${us.id}`, {
-                            withCredentials: true,
-                            headers: {
-                                'API-KEY': '0c7f7a4d-ffbe-4143-a04f-3a08c1c80984'
-                            }
-                        }).then(response => {
-                            if (response.data.resultCode === 0) {
+                        followAPI.unFollow(us.id).then(response => {
+                            if (response.resultCode === 0) {
                                 props.unFollow(us.id)
                             }
                         })
@@ -70,6 +58,7 @@ let Users = (props: UsersPropsType) => {
                             <div>
                                 {us.followed
                                     ? <button
+                                        disabled
                                         onClick={onUnFollowHandler}>Unfollow</button>
                                     : <button
                                         onClick={onFollowHandler}>Follow</button>}
