@@ -1,7 +1,14 @@
 import React from 'react'
 import {connect} from "react-redux";
 import {
-    followAC, setCurrentPageAC, setIsFetchingAC, setUsersAC, setUsersCountAC, unFollowAC, UserReducerType
+    followAC,
+    setCurrentPageAC,
+    setIsFetchingAC,
+    setIsFollowingAC,
+    setUsersAC,
+    setUsersCountAC,
+    unFollowAC,
+    UserReducerType
 } from '../../Redux/users-reducer';
 import {RootStateReduxType} from "../../Redux/redux-store";
 import Users from './Users.';
@@ -14,6 +21,7 @@ type MapStateToPropsType = {
     totalUsersCount: number
     currentPage: number
     isFetching: boolean
+    followingInProgress: [] | number[]
 }
 type MapDispatchToPropsType = {
     follow: (userID: number) => void
@@ -22,6 +30,7 @@ type MapDispatchToPropsType = {
     setCurrentPage: (currentPage: number) => void
     setUsersCount: (usersCount: number) => void
     setIsFetching: (isFetching: boolean) => void
+    setIsFollowing: (userId: number, isLoading: boolean) => void
 }
 type UsersAPIPropsType = {
     users: UserReducerType[]
@@ -34,7 +43,9 @@ type UsersAPIPropsType = {
     follow: (userID: number) => void
     unFollow: (userID: number) => void
     isFetching: boolean
+    followingInProgress: [] | number[]
     setIsFetching: (isFetching: boolean) => void
+    setIsFollowing: (userId: number, isLoading: boolean) => void
 }
 
 
@@ -63,6 +74,8 @@ class UsersAPIComponent extends React.Component<UsersAPIPropsType, any> {
 
                     ? <Preloader />
                     : <Users
+                        setIsFollowing={this.props.setIsFollowing}
+                        followingInProgress={this.props.followingInProgress}
                         currentPage={this.props.currentPage}
                         follow={this.props.follow}
                         unFollow={this.props.unFollow}
@@ -78,24 +91,26 @@ class UsersAPIComponent extends React.Component<UsersAPIPropsType, any> {
     }
 }
 
-let mapStateToProps = (state: RootStateReduxType) => {
+let mapStateToProps = ({usersPage}: RootStateReduxType): MapStateToPropsType => {
     return {
-        users: state.usersPage.users,
-        pageSize: state.usersPage.pageSize,
-        totalUsersCount: state.usersPage.totalUsersCount,
-        currentPage: state.usersPage.currentPage,
-        isFetching: state.usersPage.isFetching
+        users: usersPage.users,
+        pageSize: usersPage.pageSize,
+        totalUsersCount: usersPage.totalUsersCount,
+        currentPage: usersPage.currentPage,
+        isFetching: usersPage.isFetching,
+        followingInProgress: usersPage.followingInProgress
     }
 }
 
-const UsersContainer = connect <MapStateToPropsType, MapDispatchToPropsType, {}, RootStateReduxType>
+const UsersContainer = connect<MapStateToPropsType, MapDispatchToPropsType, {}, RootStateReduxType>
 (mapStateToProps, {
     follow: followAC,
     unFollow: unFollowAC,
     setUsers: setUsersAC,
     setUsersCount: setUsersCountAC,
     setIsFetching: setIsFetchingAC,
-    setCurrentPage: setCurrentPageAC
+    setCurrentPage: setCurrentPageAC,
+    setIsFollowing: setIsFollowingAC
 })(UsersAPIComponent)
 
 export default UsersContainer

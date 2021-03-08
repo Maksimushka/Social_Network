@@ -1,6 +1,6 @@
 import {
     FollowACType,
-    setCurrentPageACType,
+    setCurrentPageACType, setFollowingACType,
     setIsFetchingACType,
     setUsersACType,
     setUsersCountACType,
@@ -37,6 +37,7 @@ export type ActionsTypes = setUsersACType | FollowACType | unFollowACType |
     updateNewPostTextACType | addPostACType | updateNewMessageTextACType
     | addMessageACType | setCurrentPageACType | setUsersCountACType |
     setIsFetchingACType | setUserProfileACType | setUserDataACType | setUserPhotoACType
+| setFollowingACType
 
 
 export type StoreType = {

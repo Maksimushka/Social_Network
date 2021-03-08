@@ -46,10 +46,10 @@ const authReducer = (state = initialState, action: ActionsTypes): authReducerTyp
 };
 
 
-export const setUserDataAC = (userId: number, email: string, login: string):setUserDataACType => (
-    { type:'SET_USER_DATA', data: {userId, email, login}  }
-    )
-export const setUserPhotoAC = (photo: string):setUserPhotoACType => (
-    { type:'SET_USER_PHOTO', photo: photo }
+export const setUserDataAC = (userId: number, email: string, login: string): setUserDataACType => (
+    {type: 'SET_USER_DATA', data: {userId, email, login}}
+)
+export const setUserPhotoAC = (photo: string): setUserPhotoACType => (
+    {type: 'SET_USER_PHOTO', photo: photo}
 )
 export default authReducer;

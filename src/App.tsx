@@ -1,6 +1,5 @@
 import React from 'react';
 import './App.css';
-import Header from './components/Header/Header';
 import NavBar from './components/NavBar/NavBar';
 import Music from "./components/Music/Music";
 import News from "./components/News/News";
