@@ -1,10 +1,10 @@
 import React from 'react';
 import Profile from './Profile';
 import {connect} from 'react-redux';
-import {setUserProfileAC} from '../../Redux/profile-reducer';
 import {RootStateReduxType} from '../../Redux/redux-store';
 import {withRouter} from 'react-router-dom';
 import {profileAPI} from '../../api/api';
+import {setUserProfileAC} from '../../Redux/profile-page/profile-actions';
 
 class ProfileContainer extends React.Component<any> {
     componentDidMount() {

@@ -1,24 +1,34 @@
 import React from 'react';
 import s from './Users.module.css';
 import userPhoto from '../../assets/img/user.png';
-import {UserReducerType} from '../../Redux/users-reducer';
 import {NavLink} from 'react-router-dom';
-import {followAPI} from '../../api/api';
+import {UsersType} from '../../Redux/users-page/users-reducer';
 
 type UsersPropsType = {
-    users: UserReducerType[]
+    users: UsersType[]
     totalUsersCount: number
     pageSize: number
     currentPage: number
-    follow: (userID: number) => void
-    unFollow: (userID: number) => void
     onChangePage: (currentPage: number) => void
     followingInProgress: [] | number[]
-    setIsFollowing: (userId: number, isLoading: boolean) => void
+    follow: (id: number) => void
+    unFollow: (id: number) => void
 }
 
 let Users = (props: UsersPropsType) => {
-    let pagesCount = Math.ceil(props.totalUsersCount / props.pageSize)
+    const {
+        users,
+        totalUsersCount,
+        pageSize,
+        currentPage,
+        onChangePage,
+        followingInProgress,
+        follow,
+        unFollow
+    } = props
+
+
+    let pagesCount = Math.ceil(totalUsersCount / pageSize)
     let pages = []
     for (let i = 1; i <= pagesCount; i++) {
         pages.push(i)
@@ -29,29 +39,17 @@ let Users = (props: UsersPropsType) => {
                 {pages.map(p => {
                     return <span
                         key={p}
-                        onClick={() => props.onChangePage(p)}
-                        className={props.currentPage === p ? s.selectedPage : ''}>{p}</span>
+                        onClick={() => onChangePage(p)}
+                        className={currentPage === p ? s.selectedPage : ''}>{p}</span>
                 })}
             </div>
             {
-                props.users.map(us => {
-                    let onFollowHandler = () => {
-                        props.setIsFollowing(us.id, true)
-                        followAPI.follow(us.id).then(response => {
-                            if (response.resultCode === 0) {
-                                props.follow(us.id)
-                            }
-                            props.setIsFollowing(us.id, false)
-                        })
+                users.map(us => {
+                    const onFollowHandler = () => {
+                        follow(us.id)
                     }
-                    let onUnFollowHandler = () => {
-                        props.setIsFollowing(us.id, true)
-                        followAPI.unFollow(us.id).then(response => {
-                            if (response.resultCode === 0) {
-                                props.unFollow(us.id)
-                            }
-                            props.setIsFollowing(us.id, false)
-                        })
+                    const onUnFollowHandler = () => {
+                        unFollow(us.id)
                     }
 
                     return (
@@ -67,10 +65,10 @@ let Users = (props: UsersPropsType) => {
                                 <div>
                                     {us.followed
                                         ? <button
-                                            disabled={props.followingInProgress.some( el => el === us.id)}
+                                            disabled={followingInProgress.some(el => el === us.id)}
                                             onClick={onUnFollowHandler}>Unfollow</button>
                                         : <button
-                                            disabled={props.followingInProgress.some( el => el === us.id)}
+                                            disabled={followingInProgress.some(el => el === us.id)}
                                             onClick={onFollowHandler}>Follow</button>}
                                 </div>
                             </div>

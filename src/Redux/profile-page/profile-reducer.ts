@@ -1,4 +1,5 @@
-import {ActionsTypes, PostsType} from './state';
+import {PostsType} from '../../components/Profile/MyPosts/MyPostsContainer';
+import {addPostACType, setUserProfileACType, updateNewPostTextACType} from './profile-actions';
 
 export type userProfileType = {
     "aboutMe": string
@@ -26,17 +27,8 @@ export type ProfilePageType = {
     newPostText: string
     profile: userProfileType | null
 }
-export type addPostACType = {
-    type: "ADD-POST"
-}
-export type setUserProfileACType = {
-    type: "SET_USER_PROFILE"
-    profile: userProfileType
-}
-export type updateNewPostTextACType = {
-    type: "UPDATE-NEW-POST-TEXT",
-    newText: string
-}
+
+export type ActionType = updateNewPostTextACType | addPostACType  |  setUserProfileACType
 
 let initialState: ProfilePageType = {
         posts: [ {id: 1, message: "Hi, how are you?", likesCount: 16},
@@ -46,7 +38,7 @@ let initialState: ProfilePageType = {
         profile: null
 }
 
-export const profileReducer = (state = initialState, action: ActionsTypes): ProfilePageType => {
+export const profileReducer = (state = initialState, action: ActionType): ProfilePageType => {
     switch (action.type) {
         case "ADD-POST":
             let newPost = {id: new Date().getTime(), message: state.newPostText, likesCount: 0}
@@ -68,22 +60,5 @@ export const profileReducer = (state = initialState, action: ActionsTypes): Prof
         }
         default :
             return state
-    }
-}
-export const addPostAC = (): addPostACType => {
-    return {
-        type: "ADD-POST"
-    }
-}
-export const setUserProfileAC = (profile: userProfileType): setUserProfileACType => {
-    return {
-        type: "SET_USER_PROFILE",
-        profile: profile
-    }
-}
-export const updateNewPostText = (newText: string): updateNewPostTextACType => {
-    return {
-        type: "UPDATE-NEW-POST-TEXT",
-        newText: newText
     }
 }
