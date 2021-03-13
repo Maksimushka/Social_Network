@@ -3,21 +3,12 @@ import Header from './Header';
 import React from 'react';
 import {connect} from 'react-redux';
 import {RootStateReduxType} from '../../Redux/redux-store';
-import {authAPI, profileAPI} from '../../api/api';
-import {setUserDataAC, setUserPhotoAC} from '../../Redux/auth-page/auth-actions';
+import {getAuth} from '../../Redux/auth-page/auth-actions';
 
 class HeaderContainer extends React.Component<any, any> {
 
     componentDidMount() {
-        authAPI.getAuth().then(({data}) => {
-            if (data.resultCode === 0) {
-                let {id, login, email } = data.data
-                this.props.setUserDataAC(id, email, login)
-                profileAPI.getUser(id).then((resp) => {
-                    this.props.setUserPhotoAC(resp.photos.small)
-                })
-            }
-        })
+        this.props.getAuth()
     }
 
     render() {
@@ -35,4 +26,6 @@ const mapStateToProps = ({auth}: RootStateReduxType) => ({
 
 let WithHeaderRout = withRouter(HeaderContainer)
 
-export default connect(mapStateToProps, {setUserDataAC, setUserPhotoAC})(WithHeaderRout);
+export default connect(mapStateToProps, {
+    getAuth
+})(WithHeaderRout);
