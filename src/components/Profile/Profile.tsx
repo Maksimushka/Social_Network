@@ -6,10 +6,10 @@ export type ProfileType = {
     profile: userProfileType
 }
 
-const Profile = ({profile}: ProfileType) => {
+const Profile = (props: any) => {
     return (
         <div>
-            <ProfileInfo profile={profile} />
+            <ProfileInfo {...props} />
             <MyPostsContainer />
         </div>
     );
