@@ -13,6 +13,7 @@ import Login from './components/Login/Login';
 
 
 const App = () => {
+
     return (
         <div className='app'>
             <HeaderContainer />
@@ -21,7 +22,7 @@ const App = () => {
                 <div className='app-wrapper__content'>
                     <Route path='/login' render={() => <Login />} />
                     <Route path='/profile/:userId' render={() => <ProfileContainer />}/>
-                    <Route path='/dialogs' render={() => <DialogsContainer  />}/>
+                    <Route path='/dialogs' render={() => <DialogsContainer/> }/>
                     <Route path='/users' render={() => <UsersContainer />}/>
                     <Route path='/news' render={() => <News/>}/>
                     <Route path='/music' render={() => <Music/>}/>
