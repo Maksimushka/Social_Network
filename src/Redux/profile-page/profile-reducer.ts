@@ -1,9 +1,9 @@
 import {PostsType} from '../../components/Profile/MyPosts/MyPostsContainer';
-import {addPostACType, setUserProfileACType, updateNewPostTextACType} from './profile-actions';
+import {addPostACType, setUserProfileACType, setUserStatusACType, updateNewPostTextACType} from './profile-actions';
 
 export type userProfileType = {
-    "aboutMe": string
-    "contacts": {
+    'aboutMe': string
+    'contacts': {
         facebook: string
         website: null,
         vk: string
@@ -18,36 +18,38 @@ export type userProfileType = {
     fullName: string
     userId: 2
     photos: {
-        "small": string
-        "large": string
+        'small': string
+        'large': string
     }
 }
 export type ProfilePageType = {
     posts: Array<PostsType>
     newPostText: string
     profile: userProfileType | null
+    status: string
 }
 
-export type ActionType = updateNewPostTextACType | addPostACType  |  setUserProfileACType
+export type ActionType = updateNewPostTextACType | addPostACType | setUserProfileACType | setUserStatusACType
 
 let initialState: ProfilePageType = {
-        posts: [ {id: 1, message: "Hi, how are you?", likesCount: 16},
-            {id: 2, message: "I'm a programmer", likesCount: 56},
-            {id: 3, message: "It's my first post", likesCount: 3}, ],
-        newPostText: "",
-        profile: null
+    posts: [{id: 1, message: 'Hi, how are you?', likesCount: 16},
+        {id: 2, message: 'I\'m a programmer', likesCount: 56},
+        {id: 3, message: 'It\'s my first post', likesCount: 3},],
+    newPostText: '',
+    profile: null,
+    status: ''
 }
 
 export const profileReducer = (state = initialState, action: ActionType): ProfilePageType => {
     switch (action.type) {
-        case "ADD-POST":
+        case 'ADD-POST':
             let newPost = {id: new Date().getTime(), message: state.newPostText, likesCount: 0}
             return {
                 ...state,
                 posts: [...state.posts, newPost],
-                newPostText: ""
+                newPostText: ''
             }
-        case "UPDATE-NEW-POST-TEXT":
+        case 'UPDATE-NEW-POST-TEXT':
             return {
                 ...state,
                 newPostText: action.newText
@@ -56,6 +58,12 @@ export const profileReducer = (state = initialState, action: ActionType): Profil
             return {
                 ...state,
                 profile: action.profile
+            }
+        }
+        case 'SET_USER_STATUS': {
+            return {
+                ...state,
+                status: action.status
             }
         }
         default :

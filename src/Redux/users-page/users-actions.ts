@@ -1,6 +1,8 @@
 import {ActionTypes, UsersType} from './users-reducer';
 import {usersAPI} from '../../api/api';
+import {Dispatch} from 'redux';
 
+// TYPES
 export type FollowACType = {
     type: ActionTypes.FOLLOW
     userId: number
@@ -31,9 +33,19 @@ export type setFollowingACType = {
     userId: number
 }
 
-export const followAC = (userId: number): FollowACType => ({type: ActionTypes.FOLLOW, userId})
-export const unFollowAC = (userId: number): unFollowACType => ({type: ActionTypes.UNFOLLOW, userId})
-export const setUsersAC = (users: UsersType[]): setUsersACType => ({type: ActionTypes.SET_USERS, users: users})
+// ACTION CREATORS
+export const followAC = (userId: number): FollowACType => ({
+    type: ActionTypes.FOLLOW,
+    userId
+})
+export const unFollowAC = (userId: number): unFollowACType => ({
+    type: ActionTypes.UNFOLLOW,
+    userId
+})
+export const setUsersAC = (users: UsersType[]): setUsersACType => ({
+    type: ActionTypes.SET_USERS,
+    users: users
+})
 export const setCurrentPageAC = (currentPage: number): setCurrentPageACType => ({
     type: ActionTypes.SET_CURRENT_PAGE,
     currentPage
@@ -52,38 +64,34 @@ export const setIsFollowingAC = (userId: number, isLoading: boolean): setFollowi
     isLoading
 })
 
-export const getUsers = (pageSize: number, currentPage: number) => (dispatch: any) => {
+// THUNK CREATORS
+export const getUsers = (pageSize: number, currentPage: number) => (dispatch: Dispatch) => {
     dispatch(setIsFetchingAC(true))
-    usersAPI.getUsers(pageSize, currentPage).then(response => {
+    usersAPI.getUsers(pageSize, currentPage).then(resp => {
         dispatch(setIsFetchingAC(false))
-        dispatch(setUsersAC(response.items))
-        dispatch(setUsersCountAC(response.totalCount))
+        dispatch(setUsersAC(resp.items))
+        dispatch(setUsersCountAC(resp.totalCount))
     })
 }
-export const setUsers = (currentPage: number, pageSize: number) => (dispatch: any) => {
+export const setUsers = (currentPage: number, pageSize: number) => (dispatch: Dispatch) => {
     dispatch(setCurrentPageAC(currentPage))
     dispatch(setIsFetchingAC(true))
-    usersAPI.changePage(currentPage, pageSize).then(response => {
+    usersAPI.changePage(currentPage, pageSize).then(resp => {
         dispatch(setIsFetchingAC(false))
-        dispatch(setUsersAC(response.items))
+        dispatch(setUsersAC(resp.items))
     })
 }
-export const follow = (id: number) => (dispatch: any) => {
+export const follow = (id: number) => (dispatch: Dispatch) => {
     dispatch(setIsFollowingAC(id, true))
-    usersAPI.follow(id).then(response => {
-
-        if (response.resultCode === 0) {
-            dispatch(followAC(id))
-        }
+    usersAPI.follow(id).then(resp => {
+        if (resp.resultCode === 0) dispatch(followAC(id))
         dispatch(setIsFollowingAC(id, false))
     })
 }
-export const unFollow = (id: number) => (dispatch: any) => {
+export const unFollow = (id: number) => (dispatch: Dispatch) => {
     dispatch(setIsFollowingAC(id, true))
-    usersAPI.unFollow(id).then(response => {
-        if (response.resultCode === 0) {
-            dispatch(unFollowAC(id))
-        }
+    usersAPI.unFollow(id).then(resp => {
+        if (resp.resultCode === 0) dispatch(unFollowAC(id))
         dispatch(setIsFollowingAC(id, false))
     })
 }

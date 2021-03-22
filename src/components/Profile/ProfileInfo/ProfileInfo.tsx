@@ -1,9 +1,17 @@
 import React from 'react';
 import p from './ProfileInfo.module.css';
 import {Preloader} from '../../common/Preloader/Preloader';
-import {ProfileType} from '../Profile';
+import ProfileStatus from './ProfileStatus';
+import {userProfileType} from '../../../Redux/profile-page/profile-reducer';
+import {Dispatch} from 'redux';
 
-const ProfileInfo = ({profile}: ProfileType) => {
+type ProfileInfoType = {
+    profile: userProfileType
+    status: string
+    changeUserStatus: (status: string) => (dispatch: Dispatch) => void
+}
+
+const ProfileInfo = ({profile, status, changeUserStatus}: ProfileInfoType) => {
         if (!profile) {
             return <Preloader />
         }
@@ -15,7 +23,10 @@ const ProfileInfo = ({profile}: ProfileType) => {
                          alt=''/>
                 </div>
                 <div className={p.description}>
-                    <div className={p.name}>{profile.fullName}</div>
+                    <div className={p.name}>
+                        <div>{profile.fullName}</div>
+                        <ProfileStatus changeUserStatus={changeUserStatus} status={status} />
+                    </div>
                     <div>About me: {profile.aboutMe}</div>
                     <div>looking for a job: {profile.lookingForAJobDescription}</div>
                     <div className={p.contacts}>
@@ -28,5 +39,7 @@ const ProfileInfo = ({profile}: ProfileType) => {
             </div>
         );
 }
+
+
 
 export default ProfileInfo;

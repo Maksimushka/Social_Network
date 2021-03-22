@@ -21,7 +21,8 @@ class HeaderContainer extends React.Component<any, any> {
 const mapStateToProps = ({auth}: RootStateReduxType) => ({
     isAuth: auth.isAuth,
     login: auth.login,
-    photo: auth.photo
+    photo: auth.photo,
+    userId: auth.userId
 })
 
 let WithHeaderRout = withRouter(HeaderContainer)

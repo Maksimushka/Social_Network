@@ -40,7 +40,6 @@ export type UsersReducerType = {
     followingInProgress: [] | number[]
 }
 
-
 let initialState: UsersReducerType = {
     users: [],
     pageSize: 5,
