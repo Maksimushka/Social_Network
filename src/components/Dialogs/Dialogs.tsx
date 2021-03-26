@@ -1,36 +1,41 @@
-import React, {ChangeEvent} from 'react';
+import React from 'react';
 import s from './Dialogs.module.css';
 import DialogItem from "./DialogItem/DialogItem";
 import MessageItem from "./MessageItem/MessageItem";
 import {MapDispatchToPropsType, mapStateToPropsType} from './DialogsContainer';
+import {Field, reduxForm} from 'redux-form';
 
 type DialogsPropsType = mapStateToPropsType & MapDispatchToPropsType
 
-const Dialogs = (props: DialogsPropsType) =>  {
-    const addMessage = () => {
-        props.addMessageAC()
-    }
-    const changeTextMessage = (e: ChangeEvent<HTMLTextAreaElement>) => {
-        props.updateNewMessageTextAC(e.currentTarget.value)
-    }
+const DialogsForm: React.FC = (props: any) => {
+    return (
+        <form onSubmit={props.handleSubmit}>
+             <Field name={'messageField'} placeholder="Enter your message"
+                 component={'textarea'} className={s.text}/>
+            <button className={s.butt}>Send</button>
+        </form>
+    )
+}
 
-    const dialogsElement = props.dialogs.map( d => <DialogItem key={d.id} name={d.name} id={d.id} /> )
-    const messageElement = props.messages.map( m => <MessageItem key={m.id} id={m.id} message={m.message} /> )
+const ReduxDialogsForm = reduxForm({form: 'dialogs'})(DialogsForm)
+
+const Dialogs = (props: DialogsPropsType) =>  {
+    const addMessage = (value: any) => {
+        props.addMessageAC(value.messageField)
+    }
 
     return (
         <div className={s.dialogs}>
             <div className={s.dialogs__items}>
-                { dialogsElement }
+                {
+                    props.dialogs.map( d => <DialogItem key={d.id} name={d.name} id={d.id} /> )
+                }
             </div>
             <div className={s.messages}>
-                { messageElement }
-                <div className={s.input}>
-                <textarea value={ props.newMessageText }
-                          placeholder="Enter your message"
-                          onChange={ changeTextMessage }
-                          className={s.text}/>
-                    <button onClick={ addMessage } className={s.butt}>Send</button>
-                </div>
+                {
+                    props.messages.map( m => <MessageItem key={m.id} id={m.id} message={m.message} /> )
+                }
+                <ReduxDialogsForm onSubmit={addMessage} />
             </div>
         </div>
     );

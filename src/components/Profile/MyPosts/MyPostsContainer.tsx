@@ -1,8 +1,7 @@
-import React from 'react';
 import MyPosts from './MyPosts';
-import {connect} from "react-redux";
-import {RootStateReduxType} from "../../../Redux/redux-store";
-import {addPostAC, updateNewPostTextAC} from '../../../Redux/profile-page/profile-actions';
+import {connect} from 'react-redux';
+import {RootStateReduxType} from '../../../Redux/redux-store';
+import {addPostAC} from '../../../Redux/profile-page/profile-actions';
 
 export type PostsType = {
     id: number
@@ -11,23 +10,17 @@ export type PostsType = {
 }
 type mapStateToPropsType = {
     posts: PostsType[]
-    newPostText: string
 }
 type mapDispatchToPropsType = {
-    updateNewPostTextAC: (text: string) => void
-    addPostAC: () => void
+    addPostAC: (text: string) => void
 }
 
-let mapStateToProps = (state: RootStateReduxType) => {
-    return {
-        posts: state.profilePage.posts,
-        newPostText: state.profilePage.newPostText
-    }
-}
+let mapStateToProps = (state: RootStateReduxType) => ({
+    posts: state.profilePage.posts
+})
 
 const MyPostsContainer = connect<mapStateToPropsType, mapDispatchToPropsType, {}, RootStateReduxType>(mapStateToProps, {
-    addPostAC,
-    updateNewPostTextAC
+    addPostAC
 })(MyPosts)
 
 export default MyPostsContainer;
