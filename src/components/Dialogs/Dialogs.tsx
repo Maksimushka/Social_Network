@@ -1,17 +1,23 @@
 import React from 'react';
 import s from './Dialogs.module.css';
-import DialogItem from "./DialogItem/DialogItem";
-import MessageItem from "./MessageItem/MessageItem";
+import DialogItem from './DialogItem/DialogItem';
+import MessageItem from './MessageItem/MessageItem';
 import {MapDispatchToPropsType, mapStateToPropsType} from './DialogsContainer';
 import {Field, reduxForm} from 'redux-form';
+import {maxLengthCreator, requiredField} from '../../common/validators/validators';
+import {Textarea} from '../common/formsControls/FormsControls';
 
 type DialogsPropsType = mapStateToPropsType & MapDispatchToPropsType
 
+const maxLength60 = maxLengthCreator(60)
+
 const DialogsForm: React.FC = (props: any) => {
+
     return (
         <form onSubmit={props.handleSubmit}>
              <Field name={'messageField'} placeholder="Enter your message"
-                 component={'textarea'} className={s.text}/>
+                    validate={[requiredField, maxLength60]}
+                 component={Textarea} />
             <button className={s.butt}>Send</button>
         </form>
     )

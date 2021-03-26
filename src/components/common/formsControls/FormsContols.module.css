@@ -1,0 +1,30 @@
+.textarea {
+    resize: none;
+    height: 100px;
+    width: 400px;
+    font-size: 14px;
+    padding: 10px 15px;
+    margin-bottom: 15px;
+    border: 1px solid black;
+}
+
+.textarea:focus {
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}
+
+.input {
+    resize: none;
+    height: 35px;
+    border-radius: 10px;
+    font-size: 14px;
+    padding: 7px 10px;
+    border: 1px solid black;
+}
+
+.errorSpan {
+    color: red;
+}
+
+.error {
+    border: 1px solid red;
+}

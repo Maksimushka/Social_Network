@@ -29,16 +29,3 @@
     background-color: #486a8d;
 }
 
-.input {
-    resize: none;
-    height: 100px;
-    width: 400px;
-    font-size: 14px;
-    padding: 10px 15px;
-    margin-bottom: 15px;
-    border: 1px solid black;
-}
-
-.input:focus {
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-}
