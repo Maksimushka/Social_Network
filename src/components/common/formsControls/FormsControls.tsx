@@ -17,7 +17,7 @@ export const Input = ({input, meta, ...props}: any) => {
     const fieldStyle = `${s.input} ${hasError ? s.error : ''} `
     return (
         <div>
-            <textarea className={fieldStyle} {...input} {...props}/>
+            <input className={fieldStyle} {...input} {...props}/>
             { hasError && <span className={s.errorSpan}>{meta.error}</span>}
         </div>
     )

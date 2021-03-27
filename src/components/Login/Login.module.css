@@ -1,13 +1,24 @@
 .form {
+    width: 50%;
+    margin: 0 auto;
     display: flex;
     flex-direction: column;
-    min-height: 350px;
+    min-height: 250px;
     justify-content: space-around;
+    align-items: center;
 }
 
-.input {
-    width: 200px;
-    height: 40px;
-    border: 1px solid black;
-    border-radius: 5px;
+.button {
+    width: 90px;
+    height: 30px;
+    background-color: white;
+    border: 1px solid #6799e3;
+    color: #6799e3;
+    font-size: 15px;
+    border-radius: 8px;
+}
+
+.button:hover {
+    background-color: #6799e3;
+    color: white;
 }

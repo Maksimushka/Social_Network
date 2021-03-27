@@ -3,8 +3,8 @@ import {setUserDataACType, setUserPhotoACType} from './auth-actions';
 type ActionType = setUserDataACType | setUserPhotoACType
 export type authReducerType = {
     userId: any,
-    email: any,
-    login: any,
+    email: string | null,
+    login: string | null,
     isAuth: boolean,
     photo: string | null
 }
@@ -23,7 +23,6 @@ const authReducer = (state = initialState, action: ActionType): authReducerType 
             return {
                 ...state,
                 ...action.data,
-                isAuth: true
             }
         }
         case 'SET_USER_PHOTO': {

@@ -19,6 +19,7 @@ const Header = (props: any) => {
                             <NavLink to={`/profile/${props.userId}`}>
                                 <span className={s.userLogin}>{props.login}</span>
                             </NavLink>
+                            <button className={s.button} onClick={props.setLogout}>Log out</button>
                             <img className={s.userPhoto} src={props.photo !== null ? props.photo : userPhoto}
                                  alt="userPhoto"/>
                         </>
