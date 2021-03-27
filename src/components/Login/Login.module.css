@@ -12,7 +12,7 @@
     width: 90px;
     height: 30px;
     background-color: white;
-    border: 1px solid #6799e3;
+    border: 2px solid #6799e3;
     color: #6799e3;
     font-size: 15px;
     border-radius: 8px;
@@ -21,4 +21,8 @@
 .button:hover {
     background-color: #6799e3;
     color: white;
+}
+
+.formSummaryError {
+    color: red;
 }
