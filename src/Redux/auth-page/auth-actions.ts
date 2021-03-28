@@ -24,7 +24,7 @@ export const setUserPhotoAC = (photo: string): setUserPhotoACType => ({
 
 // THUNK CREATORS
 export const getAuth = () => (dispatch: any) => {
-    authAPI.getAuth().then(({data}) => {
+    return authAPI.getAuth().then(({data}) => {
         if (data.resultCode === 0) {
             let {id, login, email} = data.data
             dispatch(setUserDataAC(id, email, login, true))

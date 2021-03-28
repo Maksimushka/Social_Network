@@ -7,22 +7,41 @@ import UsersContainer from './components/Users/UsersContainer';
 import ProfileContainer from './components/Profile/ProfileContainer';
 import HeaderContainer from './components/Header/HeaderContainer';
 import Login from './components/Login/Login';
+import {connect} from 'react-redux';
+import {initializeApp} from './Redux/app-reducer';
+import {RootStateReduxType} from './Redux/redux-store';
+import {Preloader} from './components/common/Preloader/Preloader';
 
-const App = () => {
+class App extends React.Component<any, any> {
 
-    return (
-        <div className='app'>
-            <HeaderContainer/>
-            <div className='app-wrapper'>
-                <Route path='/login' render={() => <Login/>}/>
-                <Route path='/profile/:userId?' render={() => <ProfileContainer/>}/>
-                <Route path='/dialogs' render={() => <DialogsContainer/>}/>
-                <Route path='/users' render={() => <UsersContainer/>}/>
-                <Route path='/settings' render={() => <Settings/>}/>
+    componentDidMount() {
+        this.props.initializeApp()
+    }
+
+    render () {
+        if (!this.props.initialized) {
+            return <Preloader />
+        }
+        return (
+            <div className='app'>
+                <HeaderContainer/>
+                <div className='app-wrapper'>
+                    <Route path='/login' render={() => <Login/>}/>
+                    <Route path='/profile/:userId?' render={() => <ProfileContainer/>}/>
+                    <Route path='/dialogs' render={() => <DialogsContainer/>}/>
+                    <Route path='/users' render={() => <UsersContainer/>}/>
+                    <Route path='/settings' render={() => <Settings/>}/>
+                </div>
             </div>
-        </div>
-    );
+        );
+    }
+}
+
+const mapStateToProps = (state: RootStateReduxType) => {
+    return {
+        initialized: state.appPage.initialized
+    }
 }
 
 
-export default App;
+export default  connect(mapStateToProps, {initializeApp })(App);

@@ -6,9 +6,6 @@ import {RootStateReduxType} from '../../Redux/redux-store';
 import {getAuth, setLogout} from '../../Redux/auth-page/auth-actions';
 
 class HeaderContainer extends React.Component<any, any> {
-    componentDidMount() {
-        this.props.getAuth()
-    }
     render() {
         return (
             <Header {...this.props}/>
@@ -26,6 +23,5 @@ const mapStateToProps = ({auth}: RootStateReduxType) => ({
 let WithHeaderRout = withRouter(HeaderContainer)
 
 export default connect(mapStateToProps, {
-    getAuth,
     setLogout
 })(WithHeaderRout);
