@@ -1,34 +1,27 @@
 .list {
     width: 45%;
+    height: 50%;
     display: flex;
-    justify-content: space-around;
 
+    justify-content: space-around;
     a {
+        padding-top: 5px;
         color: white;
+        &:hover {
+            border-bottom: 2px solid white;
+        };
     };
 
     .active {
-        color: #2a5da8;
-        border: 1px ;
-        background-color: #E0E0E0;
+        border-bottom: 2px solid white;
     }
 
     li {
         text-align: center;
         list-style: none;
-        width: 70px;
         height: 25px;
-        padding-top: 5px;
-        font-size: 14px;
-        border-bottom: 1px solid white;
-
-        &:hover {
-            color: #2a5da8;
-            background-color: #E0E0E0;
-        };
-        &:active {
-            border: 1px solid white;
-        };
+        padding: 0 10px 10px;
+        font-size: 18px;
     }
 }
 

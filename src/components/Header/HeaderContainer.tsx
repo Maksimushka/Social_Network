@@ -1,9 +1,9 @@
-import { withRouter} from 'react-router-dom';
+import {withRouter} from 'react-router-dom';
 import Header from './Header';
 import React from 'react';
 import {connect} from 'react-redux';
 import {RootStateReduxType} from '../../Redux/redux-store';
-import {getAuth, setLogout} from '../../Redux/auth-page/auth-actions';
+import {setLogout} from '../../Redux/auth-page/auth-actions';
 
 class HeaderContainer extends React.Component<any, any> {
     render() {

@@ -9,7 +9,7 @@ const Header = (props: any) => {
     return (
         <header className={s.header}>
             <div className={styleContainer.container}>
-                <div className={s.image}>
+                <div className={s.logo}>
                     <NavLink to='/profile' className={s.a}>
                         <img src='https://www.amic.ru/project/all/architecture-barnaul/images/tild3630-6134-4437-b138-623638326363__medicallogopng32.jpeg'
                              alt='logo'/>
