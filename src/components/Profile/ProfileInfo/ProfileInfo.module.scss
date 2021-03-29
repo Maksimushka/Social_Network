@@ -1,42 +1,71 @@
 .profileInfo {
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+  border: 1px solid black;
+  padding: 10px;
+
+  .avaBlock {
     display: flex;
-    justify-content: flex-start;
-}
-.avaBlock {
+    justify-content: space-around;
+    flex-direction: column;
+    min-height: 350px;
+    align-items: center;
+    width: 35%;
+    min-width: 280px;
 
-}
+    .ava {
+      width: 250px;
+      height: 250px;
+    }
 
-.ava {
-    width: 250px;
-    height: 250px;
-    margin-top: 25px;
-    margin-left: 25px;
-}
+    button {
+      width: 180px;
+      height: 35px;
+      border: 1px solid #486a8d;
 
-.description {
+      &:hover {
+        background-color: #6799e3;
+      }
+    }
+  }
+
+  .description {
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
-    padding: 10px;
-    margin-left: 40px;
-    font-size: 16px;
-}
-.description div {
-    margin-bottom: 15px;
-}
-
-.name {
-    margin-bottom: 30px;
-    font-size: 22px;
-}
-
-.contacts {
-    display: flex;
-    flex-direction: column;
-
-}
-
-.editableInput {
-    width: 200px;
     border: 1px solid black;
+
+    width: 55%;
+    padding: 10px;
+    font-size: 18px;
+
+    .name {
+      margin-bottom: 30px;
+
+      h2 {
+        font-size: 22px;
+        margin-bottom: 10px;
+      }
+    }
+
+    .contacts {
+      display: flex;
+      flex-direction: column;
+
+      a {
+
+        border: 1px solid black;
+      }
+    }
+
+    .editableInput {
+      width: 200px;
+      border: 1px solid black;
+    }
+  }
 }
+
+
+
+

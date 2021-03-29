@@ -65,9 +65,10 @@ export const setIsFollowingAC = (userId: number, isLoading: boolean): setFollowi
 })
 
 // THUNK CREATORS
-export const getUsers = (pageSize: number, currentPage: number) => (dispatch: Dispatch) => {
+export const getUsers = (page: number, currentPage: number) => (dispatch: Dispatch) => {
     dispatch(setIsFetchingAC(true))
-    usersAPI.getUsers(pageSize, currentPage).then(resp => {
+    dispatch(setCurrentPageAC(page))
+    usersAPI.getUsers(page, currentPage).then(resp => {
         dispatch(setIsFetchingAC(false))
         dispatch(setUsersAC(resp.items))
         dispatch(setUsersCountAC(resp.totalCount))

@@ -18,20 +18,18 @@ class App extends React.Component<any, any> {
         this.props.initializeApp()
     }
 
-    render () {
+    render() {
         if (!this.props.initialized) {
-            return <Preloader />
+            return <Preloader/>
         }
         return (
             <div className='app'>
                 <HeaderContainer/>
-                <div className='app-wrapper'>
-                    <Route path='/login' render={() => <Login/>}/>
-                    <Route path='/profile/:userId?' render={() => <ProfileContainer/>}/>
-                    <Route path='/dialogs' render={() => <DialogsContainer/>}/>
-                    <Route path='/users' render={() => <UsersContainer/>}/>
-                    <Route path='/settings' render={() => <Settings/>}/>
-                </div>
+                <Route path='/login' render={() => <Login/>}/>
+                <Route path='/profile/:userId?' render={() => <ProfileContainer/>}/>
+                <Route path='/dialogs' render={() => <DialogsContainer/>}/>
+                <Route path='/users' render={() => <UsersContainer/>}/>
+                <Route path='/settings' render={() => <Settings/>}/>
             </div>
         );
     }
@@ -44,4 +42,4 @@ const mapStateToProps = (state: RootStateReduxType) => {
 }
 
 
-export default  connect(mapStateToProps, {initializeApp })(App);
+export default connect(mapStateToProps, {initializeApp})(App);

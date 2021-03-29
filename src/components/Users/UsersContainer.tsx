@@ -5,6 +5,12 @@ import {RootStateReduxType} from '../../Redux/redux-store';
 import Users from './Users.';
 import {Preloader} from '../common/Preloader/Preloader';
 import {follow, getUsers, setUsers, unFollow} from '../../Redux/users-page/users-actions';
+import {
+    getCurrentPageSelector, getFollowingSelector, getIsFetchingSelector,
+    getPageSizeSelector,
+    getTotalUsersCountSelector,
+    getUsersSelector
+} from '../../selectors/users-selectors';
 
 type MapStateToPropsType = {
     users: UsersType[]
@@ -20,24 +26,14 @@ type MapDispatchToPropsType = {
     follow: (id: number) => void
     unFollow: (id: number) => void
 }
-type UsersAPIPropsType = {
-    users: UsersType[]
-    pageSize: number
-    totalUsersCount: number
-    currentPage: number
-    isFetching: boolean
-    followingInProgress: [] | number[]
-    getUsers: (pageSize: number, currentPage: number) => void
-    setUsers: (currentPage: number, pageSize: number) => void
-    follow: (id: number) => void
-    unFollow: (id: number) => void
-}
+type UsersAPIPropsType = MapDispatchToPropsType & MapStateToPropsType
 
 class UsersAPIComponent extends React.Component<UsersAPIPropsType, any> {
 
     componentDidMount() {
         this.props.getUsers(this.props.pageSize, this.props.currentPage)
     }
+
     onChangePage = (currentPage: number) => {
         this.props.setUsers(currentPage, this.props.pageSize)
     }
@@ -58,23 +54,20 @@ class UsersAPIComponent extends React.Component<UsersAPIPropsType, any> {
                         totalUsersCount={this.props.totalUsersCount}
                         onChangePage={this.onChangePage}/>
                 }
-
             </>
 
         )
     }
 }
 
-const mapStateToProps = ({usersPage}: RootStateReduxType): MapStateToPropsType => {
-    return {
-        users: usersPage.users,
-        pageSize: usersPage.pageSize,
-        totalUsersCount: usersPage.totalUsersCount,
-        currentPage: usersPage.currentPage,
-        isFetching: usersPage.isFetching,
-        followingInProgress: usersPage.followingInProgress
-    }
-}
+const mapStateToProps = (state: RootStateReduxType): MapStateToPropsType => ({
+    users: getUsersSelector(state),
+    pageSize: getPageSizeSelector(state),
+    totalUsersCount: getTotalUsersCountSelector(state),
+    currentPage: getCurrentPageSelector(state),
+    isFetching: getIsFetchingSelector(state),
+    followingInProgress: getFollowingSelector(state)
+})
 
 const UsersContainer = connect<MapStateToPropsType, MapDispatchToPropsType, {}, RootStateReduxType>
 (mapStateToProps, {
