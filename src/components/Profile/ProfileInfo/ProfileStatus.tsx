@@ -1,4 +1,4 @@
-import React, {ChangeEvent} from 'react';
+import React, {ChangeEvent,KeyboardEvent,  useEffect, useState} from 'react';
 import s from './ProfileInfo.module.scss'
 import {Dispatch} from 'redux';
 
@@ -7,48 +7,36 @@ type ProfileStatusType = {
     changeUserStatus: (status: string) => (dispatch: Dispatch) => void
 }
 
-export class ProfileStatus extends React.Component<ProfileStatusType, any> {
-    state = {
-        editMode: false,
-        status: this.props.status
+export const ProfileStatus = (props:ProfileStatusType ) => {
+    const [status, setStatus] = useState(props.status)
+    const [editMode, setEditMode] = useState<boolean>( false)
+
+    const activateEditMode = () => setEditMode(true)
+    const deActivateEditMode = () => {
+        setEditMode(false)
+        props.changeUserStatus(status)
+    }
+    const onKeyPressHandler = (e: KeyboardEvent<HTMLInputElement>) => {
+        e.charCode === 13 && deActivateEditMode()
+    }
+    const onStatusChange = (e: ChangeEvent<HTMLInputElement>) => {
+        setStatus(e.currentTarget.value)
     }
 
-    activateEditMode = () => {
-        this.setState({
-            editMode: true
-        })
-    }
-    deActivateEditMode = () => {
-        this.setState({
-            editMode: false
-        })
-        this.props.changeUserStatus(this.state.status)
-    }
-    onStatusChange = (e: ChangeEvent<HTMLInputElement>) => {
-        this.setState({
-            status: e.currentTarget.value
-        })
-    }
-    componentDidUpdate(prevProps: Readonly<ProfileStatusType>, prevState: Readonly<any>) {
-        if (this.props.status !== prevProps.status) {
-            this.setState({
-                status: this.props.status
-            })
-        }
-    }
+    useEffect(() => {
+        setStatus(props.status)
+    }, [props.status])
 
-    render() {
-        return (
-            <>
-                {
-                    this.state.editMode
-                    ? <input value={this.state.status} onChange={this.onStatusChange}
-                             autoFocus onBlur={ this.deActivateEditMode }
+    return (
+        <>
+            {
+                editMode
+                    ? <input onKeyPress={ onKeyPressHandler } value={status} onChange={ onStatusChange }
+                             autoFocus onBlur={ deActivateEditMode }
                              className={s.editableInput} type="text"/>
-                    : <span onDoubleClick={ this.activateEditMode }
-                            className={s.editableSpan}>{this.state.status || '-------'}</span>
-                }
-            </>
-        )
-    }
+                    : <span onDoubleClick={ activateEditMode }
+                            className={s.editableSpan}>{ status || '-------'}</span>
+            }
+        </>
+    )
 }
