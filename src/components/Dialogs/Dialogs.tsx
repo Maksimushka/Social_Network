@@ -25,7 +25,7 @@ const DialogsForm: React.FC = (props: any) => {
 
 const ReduxDialogsForm = reduxForm({form: 'dialogs'})(DialogsForm)
 
-const Dialogs = (props: DialogsPropsType) =>  {
+const Dialogs = React.memo((props: DialogsPropsType) =>  {
     const addMessage = (value: any) => {
         props.addMessageAC(value.messageField)
     }
@@ -45,6 +45,6 @@ const Dialogs = (props: DialogsPropsType) =>  {
             </div>
         </div>
     );
-}
+})
 
 export default Dialogs;

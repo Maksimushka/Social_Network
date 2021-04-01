@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import Post from './Post/Post';
 import s from './MyPosts.module.css';
 import {PostsType} from './MyPostsContainer';
@@ -11,9 +11,7 @@ type MyPostsPropsType = {
     addPostAC: (text: string) => void
 }
 
-type ProfileFormType = {
-
-}
+type ProfileFormType = {}
 
 const maxLength60 = maxLengthCreator(60)
 
@@ -23,13 +21,17 @@ const ProfileForm: React.FC<InjectedFormProps<ProfileFormType>> = (props) => {
             <Field name={'textField'} component={Textarea} placeholder="What's new?"
                    validate={[requiredField, maxLength60]}
             />
-            <button  className={s.button}>Add post</button>
+            <button className={s.button}>Add post</button>
         </form>
     )
 }
 const ReduxProfileForm = reduxForm<ProfileFormType>({form: 'profile'})(ProfileForm)
 
-const MyPosts = (props: MyPostsPropsType) => {
+const MyPosts = React.memo((props: MyPostsPropsType) => {
+
+    useEffect(() => {
+
+    }, [])
 
     const addPost = (values: any) => {
         props.addPostAC(values.textField)
@@ -38,7 +40,7 @@ const MyPosts = (props: MyPostsPropsType) => {
     return (
         <div className={s.posts}>
             <h2 className={s.head}>My post</h2>
-            <ReduxProfileForm onSubmit={addPost} />
+            <ReduxProfileForm onSubmit={addPost}/>
             <div className={s.posts__item}>
                 {
                     props.posts.map(p => {
@@ -48,6 +50,6 @@ const MyPosts = (props: MyPostsPropsType) => {
             </div>
         </div>
     );
-}
+})
 
 export default MyPosts;

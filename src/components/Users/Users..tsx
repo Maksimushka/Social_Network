@@ -15,7 +15,7 @@ type UsersPropsType = {
     unFollow: (id: number) => void
 }
 
-let Users = (props: UsersPropsType) => {
+let Users = React.memo((props: UsersPropsType) => {
     const {
         users,
         totalUsersCount,
@@ -95,6 +95,6 @@ let Users = (props: UsersPropsType) => {
             }
         </div>
     )
-}
+})
 
 export default Users

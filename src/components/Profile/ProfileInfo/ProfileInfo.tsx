@@ -10,7 +10,7 @@ type ProfileInfoType = {
     changeUserStatus: (status: string) => (dispatch: Dispatch) => void
 }
 
-const ProfileInfo = ({profile, status, changeUserStatus}: ProfileInfoType) => {
+const ProfileInfo = React.memo(({profile, status, changeUserStatus}: ProfileInfoType) => {
         return (
             <div className={p.profileInfo}>
                 <div className={p.avaBlock}>
@@ -36,7 +36,7 @@ const ProfileInfo = ({profile, status, changeUserStatus}: ProfileInfoType) => {
                 </div>
             </div>
         );
-}
+})
 
 
 
