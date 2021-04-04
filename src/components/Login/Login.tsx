@@ -1,7 +1,7 @@
 import React from 'react';
 import s from './Login.module.css'
 import {Field, InjectedFormProps, reduxForm} from 'redux-form';
-import {Input} from '../common/formsControls/FormsControls';
+import {CreateField, Input} from '../common/formsControls/FormsControls';
 import {maxLengthCreator, requiredField} from '../../common/validators/validators';
 import {connect} from 'react-redux';
 import {setLogin} from '../../Redux/auth-page/auth-actions';
@@ -20,12 +20,9 @@ const LoginForm: React.FC<InjectedFormProps<FormDataType>> = (props) => {
     console.log('rerender')
     return (
         <form className={s.form} onSubmit={props.handleSubmit}>
-            <Field component={Input} name={'email'}
-                   validate={[requiredField, maxLength30]}
-                   placeholder={'Login'}/>
-            <Field component={Input} name={'password'} type="password"
-                   validate={[requiredField, maxLength30]}
-                   placeholder={'Password'}/>
+            { CreateField('Login', 'email', [requiredField, maxLength30], Input, '' ) }
+            { CreateField('Password', 'password', [requiredField, maxLength30], Input, 'password' ) }
+
             <div>
                 <Field component={'input'} id={'123'}
                        name={'rememberMe'} type="checkbox"/>

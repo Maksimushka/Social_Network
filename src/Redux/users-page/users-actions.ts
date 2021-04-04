@@ -65,34 +65,32 @@ export const setIsFollowingAC = (userId: number, isLoading: boolean): setFollowi
 })
 
 // THUNK CREATORS
-export const getUsers = (page: number, currentPage: number) => (dispatch: Dispatch) => {
+export const getUsers = (page: number, currentPage: number) => async (dispatch: Dispatch) => {
     dispatch(setIsFetchingAC(true))
     dispatch(setCurrentPageAC(page))
-    usersAPI.getUsers(page, currentPage).then(resp => {
-        dispatch(setIsFetchingAC(false))
-        dispatch(setUsersAC(resp.items))
-        dispatch(setUsersCountAC(resp.totalCount))
-    })
+    let resp = await usersAPI.getUsers(page, currentPage)
+    dispatch(setIsFetchingAC(false))
+    dispatch(setUsersAC(resp.items))
+    dispatch(setUsersCountAC(resp.totalCount))
+
 }
-export const setUsers = (currentPage: number, pageSize: number) => (dispatch: Dispatch) => {
+export const setUsers = (currentPage: number, pageSize: number) => async (dispatch: Dispatch) => {
     dispatch(setCurrentPageAC(currentPage))
     dispatch(setIsFetchingAC(true))
-    usersAPI.changePage(currentPage, pageSize).then(resp => {
-        dispatch(setIsFetchingAC(false))
-        dispatch(setUsersAC(resp.items))
-    })
+    let resp = await usersAPI.changePage(currentPage, pageSize)
+    dispatch(setIsFetchingAC(false))
+    dispatch(setUsersAC(resp.items))
+
 }
-export const follow = (id: number) => (dispatch: Dispatch) => {
+export const follow = (id: number) => async (dispatch: Dispatch) => {
     dispatch(setIsFollowingAC(id, true))
-    usersAPI.follow(id).then(resp => {
-        if (resp.resultCode === 0) dispatch(followAC(id))
-        dispatch(setIsFollowingAC(id, false))
-    })
+    let resp = await usersAPI.follow(id)
+    if (resp.resultCode === 0) dispatch(followAC(id))
+    dispatch(setIsFollowingAC(id, false))
 }
-export const unFollow = (id: number) => (dispatch: Dispatch) => {
+export const unFollow = (id: number) => async (dispatch: Dispatch) => {
     dispatch(setIsFollowingAC(id, true))
-    usersAPI.unFollow(id).then(resp => {
-        if (resp.resultCode === 0) dispatch(unFollowAC(id))
-        dispatch(setIsFollowingAC(id, false))
-    })
+    let resp = await usersAPI.unFollow(id)
+    if (resp.resultCode === 0) dispatch(unFollowAC(id))
+    dispatch(setIsFollowingAC(id, false))
 }

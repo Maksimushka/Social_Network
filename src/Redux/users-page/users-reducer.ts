@@ -6,6 +6,7 @@ import {
     setUsersCountACType,
     unFollowACType
 } from './users-actions';
+import {updateObjectInArray} from '../../common/helpers';
 
 export enum ActionTypes {
     SET_IS_FETCHING = 'SET_IS_FETCHING',
@@ -54,22 +55,12 @@ export const usersReducer = (state:UsersReducerType = initialState, action: Acti
         case ActionTypes.FOLLOW:
             return {
                 ...state,
-                users: state.users.map(u => {
-                    if (u.id === action.userId) {
-                        return {...u, followed: true}
-                    }
-                    return u
-                })
+                users: updateObjectInArray(state.users, action.userId, 'id', {followed: true})
             }
         case ActionTypes.UNFOLLOW:
             return {
                 ...state,
-                users: state.users.map(u => {
-                    if (u.id === action.userId) {
-                        return {...u, followed: false}
-                    }
-                    return u
-                })
+                users: updateObjectInArray(state.users, action.userId, 'id', {followed: false})
             }
         case ActionTypes.SET_USERS:
             return {

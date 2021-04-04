@@ -1,8 +1,7 @@
 import React from 'react';
-import s from './Users.module.css';
-import userPhoto from '../../assets/img/user.png';
-import {NavLink} from 'react-router-dom';
 import {UsersType} from '../../Redux/users-page/users-reducer';
+import {Paginator} from './paginator';
+import User from './User';
 
 type UsersPropsType = {
     users: UsersType[]
@@ -34,62 +33,18 @@ let Users = React.memo((props: UsersPropsType) => {
     }
     return (
         <div>
-            <div>
-                {pages.map(p => {
-                    return <span
-                        key={p}
-                        onClick={() => onChangePage(p)}
-                        className={currentPage === p ? s.selectedPage : ''}>{p}</span>
-                })}
-            </div>
+            <Paginator currentPage={currentPage} pages={pages} onChangePage={onChangePage}/>
             {
                 users.map(us => {
-                    const onFollowHandler = () => {
-                        follow(us.id)
-                    }
-                    const onUnFollowHandler = () => {
-                        unFollow(us.id)
-                    }
+                    const onFollowHandler = () => follow(us.id)
+                    const onUnFollowHandler = () => unFollow(us.id)
 
-                    return (
-                        <div className={s.user} key={us.id}>
-                            <div className={s.userIcon}>
-                                <div>
-                                    <NavLink to={`/profile/${us.id}`}>
-                                        <img
-                                            className={s.photo}
-                                            src={us.photos.small! !== null ? us.photos.small! : userPhoto} alt="dsg"/>
-                                    </NavLink>
-                                </div>
-                                <div>
-                                    {us.followed
-                                        ? <button
-                                            disabled={followingInProgress.some(el => el === us.id)}
-                                            onClick={onUnFollowHandler}>Unfollow</button>
-                                        : <button
-                                            disabled={followingInProgress.some(el => el === us.id)}
-                                            onClick={onFollowHandler}>Follow</button>}
-                                </div>
-                            </div>
-                            <div className={s.userDescription}>
-                                <div className={s.userDescriptionInfo}>
-                                    <div>
-                                        {us.name}
-                                    </div>
-                                    <div>
-                                        {us.status}
-                                    </div>
-                                </div>
-                                <div className={s.userDescriptionLocation}>
-                                    <div>
-                                        {'us.location.city'}
-                                    </div>
-                                    <div>
-                                        {'us.location.country'}
-                                    </div>
-                                </div>
-                            </div>
-                        </div>)
+                    return <User
+                        key={`${us.id} ${us.name}`}
+                        followingInProgress={followingInProgress}
+                        onUnFollowHandler={onUnFollowHandler}
+                        onFollowHandler={onFollowHandler}
+                        us={us} />
                 })
             }
         </div>

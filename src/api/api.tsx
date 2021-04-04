@@ -30,11 +30,11 @@ export const usersAPI = {
 export const profileAPI = {
     getUser(userId: number) {
         return instance.get(`profile/` + userId)
-            .then(resp => resp.data)
+            .then(resp => resp)
     },
     getStatus(userId: number) {
         return instance.get(`profile/status/${userId}`)
-            .then( (resp) => resp.data )
+            .then( (resp) => resp )
     },
     changeStatus(status: string) {
         return instance.put(`profile/status`, {status: status})
@@ -44,10 +44,11 @@ export const profileAPI = {
 export const authAPI = {
     getAuth() {
         return instance.get(`auth/me`)
-            .then(resp => resp)
+            .then(resp => resp.data)
     },
     login(email: string, password: string, rememberMe: boolean = false) {
         return instance.post('auth/login', {email, password, rememberMe})
+            .then(resp => resp.data)
     },
     logout() {
         return instance.delete('auth/login')

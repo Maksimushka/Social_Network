@@ -1,5 +1,3 @@
-import {Dispatch} from 'redux';
-import {authAPI} from '../api/api';
 import {getAuth} from './auth-page/auth-actions';
 
 enum ActionsTypes {

@@ -39,20 +39,18 @@ export const removePostAC = (id: number): removePostACType => ({
 })
 
 // THUNK CREATORS
-export const getUserProfile = (userId: number) => (dispatch: Dispatch) => {
-    profileAPI.getUser(userId).then((data) => {
-        dispatch(setUserProfileAC(data))
-    })
+export const getUserProfile = (userId: number) => async (dispatch: Dispatch) => {
+    let {data} = await profileAPI.getUser(userId)
+    dispatch(setUserProfileAC(data))
+
 }
-export const getUserStatus = (userId: number) => (dispatch: Dispatch) => {
-    profileAPI.getStatus(userId).then((data) => {
-        dispatch(setUserStatusAC(data))
-    })
+export const getUserStatus = (userId: number) => async (dispatch: Dispatch) => {
+    let {data} = await profileAPI.getStatus(userId)
+    dispatch(setUserStatusAC(data))
 }
-export const changeUserStatus = (status: string) => (dispatch: Dispatch) => {
-    profileAPI.changeStatus(status).then((resp) => {
-        if (resp.data.resulCode === 0) {
-            dispatch(setUserStatusAC(status))
-        }
-    })
+export const changeUserStatus = (status: string) => async (dispatch: Dispatch) => {
+    let {data} = await profileAPI.changeStatus(status)
+    if (data.resulCode === 0) {
+        dispatch(setUserStatusAC(status))
+    }
 }
