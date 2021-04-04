@@ -1,5 +1,5 @@
 import {PostsType} from '../../components/Profile/MyPosts/MyPostsContainer';
-import {addPostACType, setUserProfileACType, setUserStatusACType} from './profile-actions';
+import {addPostACType, removePostACType, setUserProfileACType, setUserStatusACType} from './profile-actions';
 
 export type userProfileType = {
     'aboutMe': string
@@ -28,7 +28,7 @@ export type ProfilePageType = {
     status: string
 }
 
-export type ActionType = addPostACType | setUserProfileACType | setUserStatusACType
+export type ActionType = addPostACType | setUserProfileACType | setUserStatusACType | removePostACType
 
 let initialState: ProfilePageType = {
     posts: [{id: 1, message: 'Hi, how are you?', likesCount: 16},
@@ -44,7 +44,7 @@ export const profileReducer = (state = initialState, action: ActionType): Profil
             let newPost = {id: new Date().getTime(), message: action.newText, likesCount: 0}
             return {
                 ...state,
-                posts: [...state.posts, newPost]
+                posts: [newPost, ...state.posts]
             }
         case 'SET_USER_PROFILE': {
             return {
@@ -56,6 +56,12 @@ export const profileReducer = (state = initialState, action: ActionType): Profil
             return {
                 ...state,
                 status: action.status
+            }
+        }
+        case 'REMOVE_POST': {
+            return {
+                ...state,
+                posts: state.posts.filter(el => el.id !== action.id)
             }
         }
         default :

@@ -27,7 +27,6 @@ let Users = React.memo((props: UsersPropsType) => {
         unFollow
     } = props
 
-
     // let pagesCount = Math.ceil(totalUsersCount / pageSize)
     let pages = []
     for (let i = 1; i <= 30; i++) {

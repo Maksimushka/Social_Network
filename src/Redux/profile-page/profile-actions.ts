@@ -15,6 +15,10 @@ export type setUserStatusACType = {
     type: 'SET_USER_STATUS'
     status: string
 }
+export type removePostACType = {
+    type: 'REMOVE_POST'
+    id: number
+}
 
 // ACTION CREATORS
 export const addPostAC = (newText: string): addPostACType => ({
@@ -28,6 +32,10 @@ export const setUserProfileAC = (profile: userProfileType): setUserProfileACType
 export const setUserStatusAC = (status: string): setUserStatusACType => ({
     type: 'SET_USER_STATUS',
     status
+})
+export const removePostAC = (id: number): removePostACType => ({
+    type: 'REMOVE_POST',
+    id
 })
 
 // THUNK CREATORS
