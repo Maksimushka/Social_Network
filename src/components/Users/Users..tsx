@@ -1,39 +1,34 @@
-import React from 'react';
-import {UsersType} from '../../Redux/users-page/users-reducer';
-import {Paginator} from './paginator';
+import React, {useCallback} from 'react';
+import {Paginator} from '../common/paginator/paginator';
 import User from './User';
+import {useDispatch, useSelector} from 'react-redux';
+import {RootStateReduxType} from '../../Redux/redux-store';
+import {UsersReducerType} from '../../Redux/users-page/users-reducer';
+import {followAC, setUsers, unFollowAC} from '../../Redux/users-page/users-actions';
 
-type UsersPropsType = {
-    users: UsersType[]
-    totalUsersCount: number
-    pageSize: number
-    currentPage: number
-    onChangePage: (currentPage: number) => void
-    followingInProgress: [] | number[]
-    follow: (id: number) => void
-    unFollow: (id: number) => void
-}
+const Users: React.FC = React.memo(() => {
 
-let Users = React.memo((props: UsersPropsType) => {
+    const dispatch = useDispatch()
     const {
-        users,
+        currentPage,
         totalUsersCount,
         pageSize,
-        currentPage,
-        onChangePage,
-        followingInProgress,
-        follow,
-        unFollow
-    } = props
+        users,
+        followingInProgress
+    } = useSelector<RootStateReduxType, UsersReducerType>((state) => state.usersPage)
+    const onChangePage = useCallback((currentPage: number) => {
+        dispatch(setUsers(currentPage, pageSize))
+    }, [dispatch, pageSize])
+    const follow = useCallback((id: number) => dispatch(followAC(id)), [dispatch])
+    const unFollow = useCallback((id: number) => dispatch(unFollowAC(id)), [dispatch])
 
-    // let pagesCount = Math.ceil(totalUsersCount / pageSize)
-    let pages = []
-    for (let i = 1; i <= 30; i++) {
-        pages.push(i)
-    }
+
     return (
         <div>
-            <Paginator currentPage={currentPage} pages={pages} onChangePage={onChangePage}/>
+            <Paginator
+                pageSize={pageSize} totalItemsCount={totalUsersCount}
+                currentPage={currentPage} onChangePage={onChangePage}/>
+
             {
                 users.map(us => {
                     const onFollowHandler = () => follow(us.id)

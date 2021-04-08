@@ -43,7 +43,7 @@ export type UsersReducerType = {
 
 let initialState: UsersReducerType = {
     users: [],
-    pageSize: 5,
+    pageSize: 10,
     totalUsersCount: 23,
     isFetching: true,
     currentPage: 1,
