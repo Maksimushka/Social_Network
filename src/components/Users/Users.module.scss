@@ -1,0 +1,67 @@
+.usersBlock {
+    width: 100%;
+}
+
+.container {
+    flex-direction: column;
+}
+
+.user {
+    width: 70%;
+    padding: 15px;
+    display: flex;
+    justify-content: space-around;
+    font-size: 16px;
+    border: 1px solid #6799e3;
+    border-top: 0;
+
+    .userIconBlock {
+        width: 120px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        button {
+            width: 100px;
+            background-color: #6799e3;
+            height: 30px;
+            color: white;
+
+            &:active {
+                background-color: #135ab8;
+            }
+
+            &:hover {
+                box-shadow: 0 0 10px silver;
+            }
+        }
+        .photo {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            margin-bottom: 10px;
+        }
+    }
+
+    .userDescriptionBlock {
+        width: 50%;
+        border-radius: 5px;
+        display: flex;
+        justify-content: space-between;
+        padding: 0 15px;
+
+        .userDescriptionInfo {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+        }
+    }
+}
+
+.imgLoad {
+    text-align: center;
+    width: 400px;
+    height: 800px;
+    padding-top: 380px;
+    margin: 0 auto;
+}

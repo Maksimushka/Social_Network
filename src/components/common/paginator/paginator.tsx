@@ -1,5 +1,5 @@
-import s from '../../Users/Users.module.css';
 import React, {useState} from 'react';
+import s from './paginator.module.scss'
 
 type PaginatorPropsType = {
     onChangePage: (currentPage: number) => void
@@ -23,21 +23,26 @@ export const Paginator = React.memo(({pageSize, totalItemsCount, onChangePage, c
     let leftPortionPageNumber = (portionNumber - 1) * portionSize + 1;
     let rightPortionPageNumber = portionNumber * portionSize
 
+
+
     return (
-        <div>
+        <div className={s.paginatorBlock}>
             { portionNumber > 1 && <button onClick={() => setPortionNumber(portionNumber - 1)}>Prev</button> }
-
-            {pages
-                .filter(el => {
-                    return el >= leftPortionPageNumber && el <= rightPortionPageNumber
-                })
-                .map(p => {
-                return <span
-                    key={p}
-                    onClick={() => onChangePage(p)}
-                    className={currentPage === p ? s.selectedPage : ''}>{p}</span>
-            })}
-
+            <div className={s.portionBlock}>
+                {
+                    pages
+                    .filter(el => {
+                        return el >= leftPortionPageNumber && el <= rightPortionPageNumber
+                    })
+                    .map(p => {
+                        const styleForPage = `${s.pageNumber} ${currentPage === p ? s.pageNumberActive : ''}`
+                        return <span
+                            key={p}
+                            onClick={() => onChangePage(p)}
+                            className={styleForPage}>{p}</span>
+                    })
+                }
+            </div>
             { portionCount > portionNumber && <button onClick={() => setPortionNumber(portionNumber + 1)}>Next</button> }
         </div>
     )

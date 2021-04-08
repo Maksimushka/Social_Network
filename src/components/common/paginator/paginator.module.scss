@@ -1,0 +1,51 @@
+.paginatorBlock {
+  display: flex;
+  width: 70%;
+  height: 60px;
+  justify-content: space-around;
+  align-items: center;
+  margin: 0 auto;
+
+  button {
+    width: 60px;
+    height: 30px;
+    color: #6799e3;
+    font-size: 18px;
+    &:hover {
+      border-bottom: 1px solid #6799e3;
+    }
+  }
+
+  .portionBlock {
+    display: flex;
+
+    .pageNumber {
+      display: block;
+      width: 35px;
+      height: 25px;
+      background-color: white;
+      border: 1px solid #6799e3;
+      border-left: 0;
+      color: #6799e3;
+      cursor: pointer;
+      text-align: center;
+      padding-top: 3px;
+
+      &:first-child {
+        border-left: 1px solid #6799e3;
+      }
+
+      &:hover {
+        background-color: #6799e3;
+        color: white;
+        border: 1px solid white;
+      }
+
+    }
+    .pageNumberActive {
+      background-color: #6799e3;
+      color: white;
+    }
+  }
+
+}

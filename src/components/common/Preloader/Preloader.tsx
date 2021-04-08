@@ -1,4 +1,4 @@
-import s from '../../Users/Users.module.css';
+import s from '../../Users/Users.module.scss';
 import loading from '../../../assets/svg-loaders/three-dots.svg';
 import React from 'react';
 export let Preloader = () => {
