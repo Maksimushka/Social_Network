@@ -1,24 +1,33 @@
-import React from 'react';
+import React, {ChangeEvent} from 'react';
 import p from './ProfileInfo.module.scss';
 import {ProfileStatus} from './ProfileStatus';
 import {userProfileType} from '../../../Redux/profile-page/profile-reducer';
 import {Dispatch} from 'redux';
+import user from '../../../assets/img/new-user.png'
 
 type ProfileInfoType = {
     profile: userProfileType
     status: string
+    isOwner: boolean
     changeUserStatus: (status: string) => (dispatch: Dispatch) => void
+    savePhoto: (photo: any) =>  void
 }
 
-const ProfileInfo = React.memo(({profile, status, changeUserStatus}: ProfileInfoType) => {
+const ProfileInfo = React.memo(({profile, status, changeUserStatus, isOwner, savePhoto}: ProfileInfoType) => {
+    const userPhoto = profile.photos.large || user
+    const onChangePhoto = (e: ChangeEvent<HTMLInputElement>) => {
+        if (e.target.files!.length) {
+            savePhoto(e.target.files![0])
+        }
+    }
         return (
             <div className={p.profileInfo}>
                 <div className={p.avaBlock}>
                     <img className={p.ava}
-                         src={profile.photos.large}
+                         src={userPhoto}
                          alt=''
                     />
-                    <button>Change avatar</button>
+                    {isOwner && <input type={'file'} onChange={onChangePhoto}/>}
                 </div>
                 <div className={p.description}>
                     <div className={p.name}>

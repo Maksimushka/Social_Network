@@ -19,6 +19,13 @@ export type removePostACType = {
     type: 'REMOVE_POST'
     id: number
 }
+export type setPhotoACType = {
+    type: 'SET_PHOTO',
+    photo: any
+}
+
+export type ProfileActionsType = addPostACType | setUserProfileACType
+    | setUserStatusACType | removePostACType | setPhotoACType
 
 // ACTION CREATORS
 export const addPostAC = (newText: string): addPostACType => ({
@@ -37,6 +44,10 @@ export const removePostAC = (id: number): removePostACType => ({
     type: 'REMOVE_POST',
     id
 })
+export const setPhotoAC = (photo: {small: string, large: string}) => ({
+    type: 'SET_PHOTO',
+    photo
+})
 
 // THUNK CREATORS
 export const getUserProfile = (userId: number) => async (dispatch: Dispatch) => {
@@ -52,5 +63,12 @@ export const changeUserStatus = (status: string) => async (dispatch: Dispatch) =
     let {data} = await profileAPI.changeStatus(status)
     if (data.resulCode === 0) {
         dispatch(setUserStatusAC(status))
+    }
+}
+export const savePhotoTC = (img: string) => async (dispatch: Dispatch) => {
+    debugger
+    let {data} = await profileAPI.savePhoto(img)
+    if (data.resultCode === 0) {
+        dispatch(setPhotoAC(data.data.photos))
     }
 }

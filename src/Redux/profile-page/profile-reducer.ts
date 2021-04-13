@@ -1,9 +1,9 @@
 import {PostsType} from '../../components/Profile/MyPosts/MyPostsContainer';
-import {addPostACType, removePostACType, setUserProfileACType, setUserStatusACType} from './profile-actions';
+import { ProfileActionsType } from './profile-actions';
 
 export type userProfileType = {
-    'aboutMe': string
-    'contacts': {
+    aboutMe: string
+    contacts: {
         facebook: string
         website: null,
         vk: string
@@ -18,8 +18,8 @@ export type userProfileType = {
     fullName: string
     userId: 2
     photos: {
-        'small': string
-        'large': string
+        small: string
+        large: string
     }
 }
 export type ProfilePageType = {
@@ -27,8 +27,6 @@ export type ProfilePageType = {
     profile: userProfileType | null
     status: string
 }
-
-export type ActionType = addPostACType | setUserProfileACType | setUserStatusACType | removePostACType
 
 let initialState: ProfilePageType = {
     posts: [{id: 1, message: 'Hi, how are you?', likesCount: 16},
@@ -38,7 +36,7 @@ let initialState: ProfilePageType = {
     status: ''
 }
 
-export const profileReducer = (state = initialState, action: ActionType): ProfilePageType => {
+export const profileReducer = (state = initialState, action: ProfileActionsType): ProfilePageType => {
     switch (action.type) {
         case 'ADD-POST':
             let newPost = {id: new Date().getTime(), message: action.newText, likesCount: 0}
@@ -62,6 +60,13 @@ export const profileReducer = (state = initialState, action: ActionType): Profil
             return {
                 ...state,
                 posts: state.posts.filter(el => el.id !== action.id)
+            }
+        }
+        case 'SET_PHOTO': {
+            debugger
+            return {
+                ...state,
+                profile: {...state.profile!, photos: action.photo}
             }
         }
         default :
