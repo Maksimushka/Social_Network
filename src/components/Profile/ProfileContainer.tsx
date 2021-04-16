@@ -1,14 +1,20 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {RootStateReduxType} from '../../Redux/redux-store';
 import {withRouter} from 'react-router-dom';
-import {changeUserStatus, getUserProfile, getUserStatus, savePhotoTC} from '../../Redux/profile-page/profile-actions';
+import {
+    changeUserStatus,
+    getUserProfile,
+    getUserStatus,
+    savePhotoTC,
+    saveProfileDataTC
+} from '../../Redux/profile-page/profile-actions';
 import AuthRedirect from '../../HOC/AuthRedirect';
 import {compose} from 'redux';
 import {Preloader} from '../common/Preloader/Preloader';
 import styleContainer from '../../common/container.module.css';
 import ProfileInfo from './ProfileInfo/ProfileInfo';
 import MyPostsContainer from './MyPosts/MyPostsContainer';
+import {RootStoreType} from '../../Redux/redux-store';
 
 class ProfileContainer extends React.Component<any> {
     refreshProfile () {
@@ -40,6 +46,7 @@ class ProfileContainer extends React.Component<any> {
         return (
             <div className={styleContainer.container}>
                 <ProfileInfo
+                    saveProfileDataTC={this.props.saveProfileDataTC}
                     savePhoto={this.props.savePhotoTC}
                     changeUserStatus={this.props.changeUserStatus}
                     status={this.props.status}
@@ -51,7 +58,7 @@ class ProfileContainer extends React.Component<any> {
     }
 }
 
-let mapStateToProps = (state: RootStateReduxType) => ({
+let mapStateToProps = (state: RootStoreType) => ({
     profile: state.profilePage.profile,
     status: state.profilePage.status,
     authUserId: state.auth.userId,
@@ -59,7 +66,7 @@ let mapStateToProps = (state: RootStateReduxType) => ({
 })
 
 export default compose<React.ComponentType>(
-    connect(mapStateToProps, { getUserProfile, getUserStatus, changeUserStatus, savePhotoTC }),
+    connect(mapStateToProps, { getUserProfile, getUserStatus, changeUserStatus, savePhotoTC, saveProfileDataTC }),
     withRouter,
     AuthRedirect
 )(ProfileContainer)

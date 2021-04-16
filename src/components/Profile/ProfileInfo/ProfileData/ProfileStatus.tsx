@@ -1,5 +1,5 @@
 import React, {ChangeEvent,KeyboardEvent,  useEffect, useState} from 'react';
-import s from './ProfileInfo.module.scss'
+import s from '../ProfileInfo.module.scss'
 import {Dispatch} from 'redux';
 
 type ProfileStatusType = {

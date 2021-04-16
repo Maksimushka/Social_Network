@@ -9,7 +9,7 @@ import HeaderContainer from './components/Header/HeaderContainer';
 import Login from './components/Login/Login';
 import {connect} from 'react-redux';
 import {initializeApp} from './Redux/app-reducer';
-import {RootStateReduxType} from './Redux/redux-store';
+import {RootStoreType} from './Redux/redux-store';
 import {Preloader} from './components/common/Preloader/Preloader';
 
 class App extends React.Component<any, any> {
@@ -35,7 +35,7 @@ class App extends React.Component<any, any> {
     }
 }
 
-const mapStateToProps = (state: RootStateReduxType) => {
+const mapStateToProps = (state: RootStoreType) => {
     return {
         initialized: state.appPage.initialized
     }

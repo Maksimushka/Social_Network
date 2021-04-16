@@ -2,7 +2,7 @@ import {setUserDataACType, setUserPhotoACType} from './auth-actions';
 
 type ActionType = setUserDataACType | setUserPhotoACType
 export type authReducerType = {
-    userId: any,
+    userId: number | null,
     email: string | null,
     login: string | null,
     isAuth: boolean,

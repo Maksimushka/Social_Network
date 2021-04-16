@@ -2,7 +2,7 @@ import React, {useCallback} from 'react';
 import {Paginator} from '../common/paginator/paginator';
 import User from './User';
 import {useDispatch, useSelector} from 'react-redux';
-import {RootStateReduxType} from '../../Redux/redux-store';
+import {RootStoreType} from '../../Redux/redux-store';
 import {UsersReducerType} from '../../Redux/users-page/users-reducer';
 import {followAC, setUsers, unFollowAC} from '../../Redux/users-page/users-actions';
 import container from './../../common/container.module.css'
@@ -17,7 +17,7 @@ const Users: React.FC = React.memo(() => {
         pageSize,
         users,
         followingInProgress
-    } = useSelector<RootStateReduxType, UsersReducerType>((state) => state.usersPage)
+    } = useSelector<RootStoreType, UsersReducerType>((state) => state.usersPage)
     const onChangePage = useCallback((currentPage: number) => {
         dispatch(setUsers(currentPage, pageSize))
     }, [dispatch, pageSize])

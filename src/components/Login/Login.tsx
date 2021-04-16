@@ -6,7 +6,7 @@ import {maxLengthCreator, requiredField} from '../../common/validators/validator
 import {connect} from 'react-redux';
 import {setLogin} from '../../Redux/auth-page/auth-actions';
 import {Redirect} from 'react-router';
-import {RootStateReduxType} from '../../Redux/redux-store';
+import {RootStoreType} from '../../Redux/redux-store';
 
 type FormDataType = {
     email: string
@@ -17,7 +17,6 @@ type FormDataType = {
 const maxLength30 = maxLengthCreator(30)
 
 const LoginForm: React.FC<InjectedFormProps<FormDataType>> = (props) => {
-    console.log('rerender')
     return (
         <form className={s.form} onSubmit={props.handleSubmit}>
             { CreateField('Login', 'email', [requiredField, maxLength30], Input, '' ) }
@@ -59,7 +58,7 @@ const Login = (props: any) => {
     )
 }
 
-let mapStateToProps = (state: RootStateReduxType) => ({
+let mapStateToProps = (state: RootStoreType) => ({
     isAuth: state.auth.isAuth
 })
 
