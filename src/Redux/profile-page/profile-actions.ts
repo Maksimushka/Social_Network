@@ -58,22 +58,21 @@ export const getUserStatus = (userId: number) => async (dispatch: Dispatch) => {
     let {data} = await profileAPI.getStatus(userId)
     dispatch(setUserStatusAC(data))
 }
-export const changeUserStatus = (status: string) => async (dispatch: Dispatch) => {
+export const changeUserStatusTC = (status: string) => async (dispatch: Dispatch) => {
     let {data} = await profileAPI.changeStatus(status)
     if (data.resulCode === 0) {
         dispatch(setUserStatusAC(status))
     }
 }
-export const savePhotoTC = (img: string) => async (dispatch: Dispatch) => {
+export const savePhotoTC = (img: File) => async (dispatch: Dispatch) => {
     let {data} = await profileAPI.savePhoto(img)
     if (data.resultCode === 0) {
         dispatch(setPhotoAC(data.data.photos))
     }
 }
-export const saveProfileDataTC = (profile: string) => async (dispatch: Dispatch<any>, getState: () => RootStoreType ) => {
+export const saveProfileDataTC = (profile: userProfileType) => async (dispatch: Dispatch<any>, getState: () => RootStoreType ) => {
     const userId = getState().auth.userId
     const {data} = await profileAPI.saveData(profile)
-    console.log(data)
     if (data.resultCode === 0) {
         if (userId !== null) {
             dispatch(getUserProfile(userId))

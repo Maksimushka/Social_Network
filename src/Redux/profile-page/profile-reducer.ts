@@ -3,7 +3,7 @@ import { ProfileActionsType } from './profile-actions';
 
 export type userProfileType = {
     aboutMe: string
-    contacts: {
+    contacts?: {
         'facebook': string
         'website': null,
         'vk': string
@@ -16,8 +16,8 @@ export type userProfileType = {
     lookingForAJob: boolean,
     lookingForAJobDescription: string
     fullName: string
-    userId: number
-    photos: {
+    userId?: number
+    photos?: {
         small: string
         large: string
     }

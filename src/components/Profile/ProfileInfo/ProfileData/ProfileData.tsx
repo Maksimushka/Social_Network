@@ -1,6 +1,5 @@
 import React from 'react';
 import p from '../ProfileInfo.module.scss';
-import Contacts from './Contacts';
 import {userProfileType} from '../../../../Redux/profile-page/profile-reducer';
 
 type ProfileDataPropsType = {
@@ -24,8 +23,6 @@ const ProfileData = ({profile, isOwner, activeEditMode}: ProfileDataPropsType) =
                     <div>looking for a job: {profile.lookingForAJobDescription}</div>
                 }
             </div>
-            <h2>My contacts: </h2>
-            <Contacts profile={profile} />
         </div>
     );
 };
