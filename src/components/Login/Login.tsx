@@ -1,65 +1,69 @@
 import React from 'react';
-import s from './Login.module.css'
-import {Field, InjectedFormProps, reduxForm} from 'redux-form';
-import {CreateField, Input} from '../common/formsControls/FormsControls';
-import {maxLengthCreator, requiredField} from '../../common/validators/validators';
-import {connect} from 'react-redux';
+import s from './Login.module.scss'
+import {InputUse, MyCheckbox} from '../common/formsControls/FormsControls';
+import {useDispatch, useSelector} from 'react-redux';
 import {setLogin} from '../../Redux/auth-page/auth-actions';
 import {Redirect} from 'react-router';
 import {RootStoreType} from '../../Redux/redux-store';
+import {authReducerType} from '../../Redux/auth-page/auth-reducer';
+import {Formik} from 'formik';
+import * as Yup from 'yup';
 
-type FormDataType = {
-    email: string
-    password: string
+type LoginDataType = {
+    email: string,
+    password: string,
     rememberMe: boolean
+    captcha: string
 }
 
-const maxLength30 = maxLengthCreator(30)
+const Login = () => {
+    const dispatch = useDispatch()
+    const {isAuth, captcha} = useSelector<RootStoreType, authReducerType>(state => state.auth)
 
-const LoginForm: React.FC<InjectedFormProps<FormDataType>> = (props) => {
-    return (
-        <form className={s.form} onSubmit={props.handleSubmit}>
-            { CreateField('Login', 'email', [requiredField, maxLength30], Input, '' ) }
-            { CreateField('Password', 'password', [requiredField, maxLength30], Input, 'password' ) }
-
-            <div>
-                <Field component={'input'} id={'123'}
-                       name={'rememberMe'} type="checkbox"/>
-                <label htmlFor="123"> remember me</label>
-            </div>
-            {
-                props.error &&
-                <div className={s.formSummaryError}>
-                    {props.error}
-                </div>
-            }
-
-            <button className={s.button}>Login</button>
-        </form>
-    )
-}
-
-const LoginReduxForm = reduxForm<FormDataType>({ form: 'login' })(LoginForm)
-
-const Login = (props: any) => {
-    const onSubmit = (formData: FormDataType) => {
-        props.setLogin(formData.email, formData.password, formData.rememberMe)
+    const onSubmit = (formData: LoginDataType) => {
+        dispatch(setLogin(formData.email, formData.password, formData.rememberMe, formData.captcha))
     }
 
-    if (props.isAuth) {
+    if (isAuth) {
         return <Redirect to='/profile' />
     }
 
     return (
         <div>
-            <h2>LOGIN</h2>
-            <LoginReduxForm onSubmit={onSubmit}/>
+            <Formik
+                initialValues={{
+                    email: '',
+                    password: '',
+                    rememberMe: false,
+                    captcha: ''
+                }}
+                validationSchema= {Yup.object({
+                    email: Yup.string().max(25, 'Must be 25 characters or less').required('Required').email(),
+                    password: Yup.string().max(25, 'Must be 95 characters or less').required('Required')
+                })}
+                onSubmit={ (values) => {
+                    onSubmit(values)
+                }}>
+                {formik => (
+                    <form className={s.form} onSubmit={formik.handleSubmit}>
+                        <InputUse className={s.input} label='Email: ' name='email' id='email' placeholder='Enter your email' />
+                        <InputUse className={s.input} label='Password: ' type='password' name='password' id='password' />
+                        <div className={s.rememberBlock}>
+                            <span>Remember me</span>
+                            <MyCheckbox id='rememberMe' name='rememberMe' />
+                        </div>
+
+                        {captcha && <img src={captcha} alt="captcha"/>}
+                        {
+                            captcha && <InputUse className={s.input} label='Enter symbols from image: '
+                                                 name='captcha' id='captcha' />}
+
+                        <button type='submit'>Login</button>
+                    </form>
+                )}
+            </Formik>
         </div>
     )
 }
 
-let mapStateToProps = (state: RootStoreType) => ({
-    isAuth: state.auth.isAuth
-})
-
-export default connect(mapStateToProps, { setLogin })(Login)
+export default Login

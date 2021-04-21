@@ -6,8 +6,8 @@ import {compose} from 'redux';
 import {Preloader} from '../common/Preloader/Preloader';
 import styleContainer from '../../common/container.module.css';
 import ProfileInfo from './ProfileInfo/ProfileInfo';
-import MyPostsContainer from './MyPosts/MyPostsContainer';
 import {RootStoreType} from '../../Redux/redux-store';
+import MyPosts from './MyPosts/MyPosts';
 
 const ProfileContainer = (props: any) => {
     const dispatch = useDispatch()
@@ -22,9 +22,11 @@ const ProfileContainer = (props: any) => {
                 props.history.push('/login')
             }
         }
-        dispatch(getUserProfile(currentUserId))
-        dispatch(getUserStatus(currentUserId))
-    }, [props.match.params.userId, userId, dispatch])
+        if (currentUserId) {
+            dispatch(getUserProfile(currentUserId))
+            dispatch(getUserStatus(currentUserId))
+        }
+    }, [props.match.params.userId, props.history, userId, dispatch])
 
 
     if (!profile) {
@@ -34,7 +36,7 @@ const ProfileContainer = (props: any) => {
     return (
         <div className={styleContainer.container}>
             <ProfileInfo profile={profile} isOwner={!props.match.params.userId} />
-            <MyPostsContainer/>
+            <MyPosts />
         </div>
     );
 }

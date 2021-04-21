@@ -1,49 +1,51 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import Post from './Post/Post';
 import s from './MyPosts.module.css';
-import {PostsType} from './MyPostsContainer';
-import {Field, InjectedFormProps, reduxForm} from 'redux-form';
-import {maxLengthCreator, requiredField} from '../../../common/validators/validators';
-import {Textarea} from '../../common/formsControls/FormsControls';
+import {useDispatch, useSelector} from 'react-redux';
+import {addPostAC} from '../../../Redux/profile-page/profile-actions';
+import {RootStoreType} from '../../../Redux/redux-store';
+import * as Yup from 'yup';
+import {InputUse} from '../../common/formsControls/FormsControls';
+import {Formik} from 'formik';
 
-type MyPostsPropsType = {
-    posts: PostsType[]
-    addPostAC: (text: string) => void
+export type PostsType = {
+    id: number
+    message: string
+    likesCount: number
 }
 
-type ProfileFormType = {}
+const MyPosts: React.FC = React.memo((props ) => {
+    const dispatch = useDispatch()
+    const { posts } = useSelector((state: RootStoreType) => state.profilePage)
 
-const maxLength60 = maxLengthCreator(60)
-
-const ProfileForm: React.FC<InjectedFormProps<ProfileFormType>> = (props) => {
-    return (
-        <form onSubmit={props.handleSubmit}>
-            <Field name={'textField'} component={Textarea} placeholder="What's new?"
-                   validate={[requiredField, maxLength60]}
-            />
-            <button className={s.button}>Add post</button>
-        </form>
-    )
-}
-const ReduxProfileForm = reduxForm<ProfileFormType>({form: 'profile'})(ProfileForm)
-
-const MyPosts = React.memo((props: MyPostsPropsType) => {
-
-    useEffect(() => {
-
-    }, [])
-
-    const addPost = (values: any) => {
-        props.addPostAC(values.textField)
+    const addPost = (value: string) => {
+        dispatch(addPostAC(value))
     }
 
     return (
         <div className={s.posts}>
             <h2 className={s.head}>My post</h2>
-            <ReduxProfileForm onSubmit={addPost}/>
+            <Formik
+                initialValues={{text: ''}}
+                validationSchema= {Yup.object({
+                    text: Yup.string().max(195, 'Must be 195 characters or less').required('Required'),
+                })}
+                onSubmit={(values, actions) => {
+                    addPost(values.text)
+                    actions.resetForm()
+                }}>
+                {formik => (
+                    <form onSubmit={formik.handleSubmit}>
+                        <InputUse className={s.input} label='New post' name='text' id='text' placeholder='What is new?' />
+                        <br/>
+                        <button className={s.button} type='submit'>Send</button>
+                    </form>
+                )}
+            </Formik>
+
             <div className={s.posts__item}>
                 {
-                    props.posts
+                    posts
                         .map(p => {
                         return <Post key={p.id} id={p.id} message={p.message} likesCount={p.likesCount}/>
                     })

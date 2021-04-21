@@ -1,0 +1,50 @@
+.form {
+  width: 100%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  min-height: 250px;
+  justify-content: space-around;
+  align-items: center;
+
+    .rememberBlock {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        height: 25px;
+
+        span {
+            margin-right: 10px;
+        }
+    }
+
+  .input {
+    resize: none;
+    height: 35px;
+    border-radius: 10px;
+    font-size: 14px;
+    padding: 7px 10px;
+    border: 1px solid black;
+  }
+
+  button {
+    width: 90px;
+    height: 30px;
+    background-color: white;
+    border: 2px solid #6799e3;
+    color: #6799e3;
+    font-size: 15px;
+    border-radius: 8px;
+
+    &:hover {
+      background-color: #6799e3;
+      color: white;
+    }
+  }
+
+  .formSummaryError {
+    color: red;
+  }
+}
+

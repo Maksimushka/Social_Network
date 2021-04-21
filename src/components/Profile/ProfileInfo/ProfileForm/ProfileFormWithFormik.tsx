@@ -38,7 +38,7 @@ const ProfileFormWithFormik = ({onSubmit, profile}: ProfileFormWithFormikType) =
                     <InputUse label='My professional skills: ' name='lookingForAJobDescription' id='lookingForAJobDescription' />
                     <br/>
 
-                    <MyCheckbox id='LookingForAJob' name='LookingForAJob' >looking for a job:</MyCheckbox>
+                    <MyCheckbox id='lookingForAJob' name='lookingForAJob' >looking for a job:</MyCheckbox>
 
                     <button type='submit'>Submit</button>
                 </form>

@@ -1,5 +1,5 @@
-import {PostsType} from '../../components/Profile/MyPosts/MyPostsContainer';
 import { ProfileActionsType } from './profile-actions';
+import {PostsType} from '../../components/Profile/MyPosts/MyPosts';
 
 export type userProfileType = {
     aboutMe: string

@@ -32,7 +32,7 @@ export const InputUse: React.FC<UseFormikPropsType> = ({ label, ...props }) => {
     return (
         <>
             <label htmlFor={props.id || props.name}>{label}</label>
-            <input {...field} placeholder={props.placeholder} type={props.type} />
+            <input className={props.className} {...field} placeholder={props.placeholder} type={props.type} />
             {meta.touched && meta.error ? (
                 <div className="error">{meta.error}</div>
             ) : null}
@@ -45,15 +45,12 @@ type MyCheckboxPropsType = FieldHookConfig<string>
 export const MyCheckbox = ({ children, ...props }: MyCheckboxPropsType) => {
     const [field, meta] = useField({ ...props, type: 'checkbox' });
     return (
-        <div>
-            <label className="checkbox-input">
-                {children}
-                <input {...field} placeholder={props.placeholder} type="checkbox" />
-            </label>
+        <>
+            <input  checked={field.checked} {...field} placeholder={props.placeholder} type="checkbox" />
             {meta.touched && meta.error ? (
                 <div className="error">{meta.error}</div>
             ) : null}
-        </div>
+        </>
     );
 };
 
