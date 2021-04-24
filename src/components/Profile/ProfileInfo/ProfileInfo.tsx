@@ -3,10 +3,10 @@ import p from './ProfileInfo.module.scss';
 import {userProfileType} from '../../../Redux/profile-page/profile-reducer';
 import user from '../../../assets/img/new-user.png'
 import ProfileData from './ProfileData/ProfileData';
-import {ProfileStatus} from './ProfileData/ProfileStatus';
 import {useDispatch} from 'react-redux';
 import {savePhotoTC, saveProfileDataTC} from '../../../Redux/profile-page/profile-actions';
 import ProfileFormWithFormik from './ProfileForm/ProfileFormWithFormik';
+import {Col, Row} from 'antd';
 
 type ProfileInfoType = {
     profile: userProfileType
@@ -15,9 +15,6 @@ type ProfileInfoType = {
 
 const ProfileInfo = React.memo(({profile, isOwner}: ProfileInfoType) => {
     const dispatch = useDispatch()
-
-    console.log('ProfileInfo')
-
     const [editMode, setEditMode] = useState(false)
     const userPhoto = profile.photos!.large || user
     const onChangePhoto = (e: ChangeEvent<HTMLInputElement>) => {
@@ -37,25 +34,25 @@ const ProfileInfo = React.memo(({profile, isOwner}: ProfileInfoType) => {
         }
     }
     return (
-        <div className={p.profileInfo}>
-            <div className={p.avaBlock}>
+        <Row>
+            <Col span={10}>
                 <img className={p.ava}
                      src={userPhoto}
-                     alt=""
+                     alt="userPhoto"
                 />
                 {isOwner && <input type={'file'} onChange={onChangePhoto}/>}
-            </div>
-
-            {
-                editMode
-                    ? <ProfileFormWithFormik profile={profile} onSubmit={onSubmit} />
-                    : <ProfileData
-                        isOwner={isOwner}
-                        activeEditMode={() => setEditMode(true)}
-                        profile={profile}/>
-            }
-            <ProfileStatus />
-        </div>
+            </Col>
+            <Col span={12}>
+                {
+                    editMode
+                        ? <ProfileFormWithFormik profile={profile} onSubmit={onSubmit}/>
+                        : <ProfileData
+                            isOwner={isOwner}
+                            activeEditMode={() => setEditMode(true)}
+                            profile={profile}/>
+                }
+            </Col>
+        </Row>
     );
 })
 

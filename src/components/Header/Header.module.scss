@@ -1,61 +1,19 @@
-.header {
-    background-color: #486a8d;
-    width: 100%;
-    height: 65px;
+.logo {
+  width: 10%;
 
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-
-    .logo {
-        width: 10%;
-        img {
-            width: 35px;
-            height: 35px;
-        }
-    }
-
-    .user {
-        display: flex;
-        height: 100%;
-        width: 15%;
-        align-items: center;
-
-        .isAuth {
-            height: 80%;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-        }
-
-        .userLogin {
-            font-size: 16px;
-            color: white;
-        }
-
-        .userPhoto {
-            width: 45px;
-            height: 45px;
-            border-radius: 50%;
-            margin-left: 10px;
-        }
-    }
-
-    .button {
-        width: 80px;
-        height: 25px;
-        background-color: white;
-        border: 1px solid #6799e3;
-        color: #6799e3;
-        font-size: 14px;
-        border-radius: 8px;
-
-        &:hover {
-            background-color: #6799e3;
-            color: white;
-        }
-    }
+  img {
+    width: 35px;
+    height: 35px;
+  }
 }
+
+.userPhoto {
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+}
+
+
 
 
 

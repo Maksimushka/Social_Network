@@ -33,12 +33,11 @@
 }
 
 .input {
-    position: absolute;
     background-color: #fafbfc;
     padding-top: 10px;
     padding-bottom: 10px;
     padding-left: 20px;
-    width: 527px;
+    width: 300px;
 }
 
 .text {
@@ -53,7 +52,6 @@
 }
 
 .butt {
-    position: absolute;
     background-color: #e9ecf1;
     height: 35px;
     border-radius: 5px;

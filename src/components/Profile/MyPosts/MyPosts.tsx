@@ -5,8 +5,9 @@ import {useDispatch, useSelector} from 'react-redux';
 import {addPostAC} from '../../../Redux/profile-page/profile-actions';
 import {RootStoreType} from '../../../Redux/redux-store';
 import * as Yup from 'yup';
-import {InputUse} from '../../common/formsControls/FormsControls';
+import {InputUse, TextareaUse} from '../../common/formsControls/FormsControls';
 import {Formik} from 'formik';
+import {Button} from 'antd';
 
 export type PostsType = {
     id: number
@@ -36,9 +37,8 @@ const MyPosts: React.FC = React.memo((props ) => {
                 }}>
                 {formik => (
                     <form onSubmit={formik.handleSubmit}>
-                        <InputUse className={s.input} label='New post' name='text' id='text' placeholder='What is new?' />
-                        <br/>
-                        <button className={s.button} type='submit'>Send</button>
+                        <TextareaUse style={{width: '400px', resize: 'none', marginBottom: 10}} name='text' id='text' placeholder='What is new?' />
+                        <Button htmlType='submit'>Send</Button>
                     </form>
                 )}
             </Formik>

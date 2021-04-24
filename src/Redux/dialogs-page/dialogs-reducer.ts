@@ -9,7 +9,7 @@ export type DialogsType = {
     name: string
 }
 
-type DialogsReducerType = {
+export type DialogsReducerType = {
     dialogs: Array<DialogsType>
     messages: Array<MessagesType>
 }
@@ -32,8 +32,7 @@ const initialState: DialogsReducerType = {
     ],
 }
 
-export const dialogsReducer = (state: DialogsReducerType = initialState, action: ActionType) => {
-
+export const dialogsReducer = (state: DialogsReducerType = initialState, action: ActionType): DialogsReducerType => {
     switch (action.type) {
         case 'ADD-MESSAGE': {
             let newMessage = {id: new Date().getTime(), message: action.newText}

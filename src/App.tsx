@@ -1,45 +1,81 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import './App.scss';
 import Settings from './components/Settings/Settings'
-import {Route} from 'react-router-dom';
+import {NavLink, Route} from 'react-router-dom';
 import DialogsContainer from './components/Dialogs/DialogsContainer';
 import UsersContainer from './components/Users/UsersContainer';
 import ProfileContainer from './components/Profile/ProfileContainer';
-import HeaderContainer from './components/Header/HeaderContainer';
 import Login from './components/Login/Login';
-import {connect} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {initializeApp} from './Redux/app-reducer';
 import {RootStoreType} from './Redux/redux-store';
 import {Preloader} from './components/common/Preloader/Preloader';
+import {Redirect} from 'react-router';
+import {Breadcrumb, Layout, Menu} from 'antd';
+import HeaderContainer from './components/Header/HeaderContainer';
 
-class App extends React.Component<any, any> {
+const {Content, Sider} = Layout;
 
-    componentDidMount() {
-        this.props.initializeApp()
+const App = () => {
+    const dispatch = useDispatch()
+    const initialized = useSelector<RootStoreType>(state => state.appPage.initialized)
+    const catchAllUnhandledErrors = (e: PromiseRejectionEvent) => {
+        e.reason ? alert(e.reason) : alert('some error occurred')
     }
 
-    render() {
-        if (!this.props.initialized) {
-            return <Preloader/>
+    useEffect(() => {
+        dispatch(initializeApp())
+        window.addEventListener('unhandledrejection', catchAllUnhandledErrors)
+
+        return () => {
+            window.removeEventListener('unhandledrejection', catchAllUnhandledErrors)
         }
-        return (
-            <div className='app'>
-                <HeaderContainer/>
-                <Route path='/login' render={() => <Login/>}/>
-                <Route path='/profile/:userId?' render={() => <ProfileContainer/>}/>
-                <Route path='/dialogs' render={() => <DialogsContainer/>}/>
-                <Route path='/users' render={() => <UsersContainer/>}/>
-                <Route path='/settings' render={() => <Settings/>}/>
-            </div>
-        );
+    }, [dispatch])
+
+    if (!initialized) {
+        return <Preloader/>
     }
+    return (
+        <Layout>
+            <HeaderContainer />
+            <Content style={{ width: 1200, margin: '0 auto' }}>
+                <Breadcrumb style={{margin: '16px 0'}}>
+                </Breadcrumb>
+                <Layout style={{padding: '0 24px 24px'}}>
+                    <Sider  width={200} className="site-layout-background">
+                        <Menu
+                            mode="inline"
+                            defaultSelectedKeys={['1']}
+                            style={{height: '100%', borderRight: 0}}
+                        >
+                            <Menu.Item key="1">
+                                <NavLink exact to='/profile'>Profile</NavLink>
+                            </Menu.Item>
+                            <Menu.Item key="2">
+                                <NavLink exact to='/dialogs'>Messages</NavLink>
+                            </Menu.Item>
+                            <Menu.Item key="3">
+                                <NavLink exact to='/users'>Users</NavLink>
+                            </Menu.Item>
+                            <Menu.Item key="4">
+                                <NavLink exact to='/settings'>Settings</NavLink>
+                            </Menu.Item>
+                        </Menu>
+                    </Sider>
+                    <Content style={{
+                            background: '#fff', padding: 24, margin: 0, minHeight: 280,
+                        }}>
+                        <Route exact path="/" render={() => <Redirect to="/profile"/>}/>
+                        <Route path="/login" render={() => <Login/>}/>
+                        <Route path="/profile/:userId?" render={() => <ProfileContainer/>}/>
+                        <Route path="/dialogs" render={() => <DialogsContainer/>}/>
+                        <Route path="/users" render={() => <UsersContainer/>}/>
+                        <Route path="/settings" render={() => <Settings/>}/>
+                    </Content>
+                </Layout>
+            </Content>
+        </Layout>
+    )
 }
 
-const mapStateToProps = (state: RootStoreType) => {
-    return {
-        initialized: state.appPage.initialized
-    }
-}
-
-
-export default connect(mapStateToProps, {initializeApp})(App);
+export default App;

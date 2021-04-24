@@ -1,38 +1,18 @@
 import React from 'react';
-import s from './FormsContols.module.css'
-import {Field} from 'redux-form';
 import {FieldHookConfig, useField} from 'formik';
+import {Checkbox, Input} from 'antd';
 
-export const Textarea = ({input, meta, ...props}: any) => {
-    const hasError = meta.touched && meta.error
-    const fieldStyle = `${s.textarea} ${hasError ? s.error : ''} `
-    return (
-        <div>
-            <textarea className={fieldStyle} {...input} {...props}/>
-            { hasError && <span className={s.errorSpan}>{meta.error}</span>}
-        </div>
-    )
-}
+const { TextArea } = Input;
 
-export const Input = ({input, meta, ...props}: any) => {
-    const hasError = meta.touched && meta.error
-    const fieldStyle = `${s.input} ${hasError ? s.error : ''} `
-    return (
-        <div>
-            <input className={fieldStyle} {...input} {...props}/>
-            { hasError && <span className={s.errorSpan}>{meta.error}</span>}
-        </div>
-    )
-}
-
-type UseFormikPropsType = {label: string} & FieldHookConfig<string>
+type UseFormikPropsType = {label?: string} & FieldHookConfig<string>
+type MyCheckboxPropsType = FieldHookConfig<string>
 
 export const InputUse: React.FC<UseFormikPropsType> = ({ label, ...props }) => {
     const [field, meta] = useField(props);
     return (
         <>
-            <label htmlFor={props.id || props.name}>{label}</label>
-            <input className={props.className} {...field} placeholder={props.placeholder} type={props.type} />
+            {label && <label htmlFor={props.id || props.name}>{label}</label>}
+            <Input style={props.style} {...field} placeholder={props.placeholder} type={props.type} />
             {meta.touched && meta.error ? (
                 <div className="error">{meta.error}</div>
             ) : null}
@@ -40,23 +20,28 @@ export const InputUse: React.FC<UseFormikPropsType> = ({ label, ...props }) => {
     );
 };
 
-type MyCheckboxPropsType = FieldHookConfig<string>
+export const TextareaUse: React.FC<UseFormikPropsType> = ({ label, ...props }) => {
+    const [field, meta] = useField(props);
+    return (
+        <>
+            {label && <label htmlFor={props.id || props.name}>{label}</label>}
+            <TextArea style={props.style} {...field} placeholder={props.placeholder} />
+            {meta.touched && meta.error ? (
+                <div className="error">{meta.error}</div>
+            ) : null}
+        </>
+    );
+};
 
 export const MyCheckbox = ({ children, ...props }: MyCheckboxPropsType) => {
     const [field, meta] = useField({ ...props, type: 'checkbox' });
     return (
         <>
-            <input  checked={field.checked} {...field} placeholder={props.placeholder} type="checkbox" />
+            {children}
+            <Checkbox  checked={field.checked} {...field} />
             {meta.touched && meta.error ? (
                 <div className="error">{meta.error}</div>
             ) : null}
         </>
     );
 };
-
-export const CreateField = (placeholder: string, name: string, validators: any, component: any, type?: string) => (
-    <Field component={component} name={name}
-           type={type}
-           validate={[...validators]}
-           placeholder={placeholder}/>
-)

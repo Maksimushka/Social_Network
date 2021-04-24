@@ -3,6 +3,7 @@ import {Formik} from 'formik';
 import * as Yup from 'yup'
 import {InputUse, MyCheckbox} from '../../../common/formsControls/FormsControls';
 import {userProfileType} from '../../../../Redux/profile-page/profile-reducer';
+import { Button } from 'antd';
 
 type ProfileFormWithFormikType = {
     profile: userProfileType
@@ -30,17 +31,16 @@ const ProfileFormWithFormik = ({onSubmit, profile}: ProfileFormWithFormikType) =
             {formik => (
                 <form onSubmit={formik.handleSubmit}>
                     <InputUse label='Full name: ' name='fullName' id='fullName' placeholder='Enter your name' />
-                    <br/>
 
                     <InputUse label='About me: ' name='aboutMe' id='aboutMe' />
-                    <br/>
 
                     <InputUse label='My professional skills: ' name='lookingForAJobDescription' id='lookingForAJobDescription' />
-                    <br/>
 
-                    <MyCheckbox id='lookingForAJob' name='lookingForAJob' >looking for a job:</MyCheckbox>
+                    <div>
+                        <MyCheckbox id='lookingForAJob' name='lookingForAJob' >looking for a job: </MyCheckbox>
+                    </div>
 
-                    <button type='submit'>Submit</button>
+                    <Button htmlType='submit'>Submit</Button>
                 </form>
             )}
         </Formik>

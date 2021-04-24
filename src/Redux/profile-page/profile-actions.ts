@@ -59,9 +59,13 @@ export const getUserStatus = (userId: number) => async (dispatch: Dispatch) => {
     dispatch(setUserStatusAC(data))
 }
 export const changeUserStatusTC = (status: string) => async (dispatch: Dispatch) => {
-    let {data} = await profileAPI.changeStatus(status)
-    if (data.resulCode === 0) {
-        dispatch(setUserStatusAC(status))
+    try {
+        let {data} = await profileAPI.changeStatus(status)
+        if (data.resulCode === 0) {
+            dispatch(setUserStatusAC(status))
+        }
+    } catch (e) {
+
     }
 }
 export const savePhotoTC = (img: File) => async (dispatch: Dispatch) => {
