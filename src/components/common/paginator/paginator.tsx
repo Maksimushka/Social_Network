@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import s from './paginator.module.scss'
+import {Button} from 'antd';
 
 type PaginatorPropsType = {
     onChangePage: (currentPage: number) => void
@@ -19,12 +20,8 @@ export const Paginator = React.memo(({pageSize, totalItemsCount, onChangePage, c
 
     let portionCount = Math.ceil(pagesCount / portionSize)
     const [portionNumber, setPortionNumber] = useState(1)
-
     let leftPortionPageNumber = (portionNumber - 1) * portionSize + 1;
     let rightPortionPageNumber = portionNumber * portionSize
-
-
-
     return (
         <div className={s.paginatorBlock}>
             { portionNumber > 1 && <button onClick={() => setPortionNumber(portionNumber - 1)}>Prev</button> }
@@ -43,7 +40,7 @@ export const Paginator = React.memo(({pageSize, totalItemsCount, onChangePage, c
                     })
                 }
             </div>
-            { portionCount > portionNumber && <button onClick={() => setPortionNumber(portionNumber + 1)}>Next</button> }
+            { portionCount > portionNumber && <Button onClick={() => setPortionNumber(portionNumber + 1)}>Next</Button> }
         </div>
     )
 })
