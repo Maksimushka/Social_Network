@@ -23,7 +23,7 @@ const Users: React.FC = React.memo(() => {
 
     const onChangePage = useCallback((currentPage: number) => {
         dispatch(getUsers(pageSize, currentPage, filter))
-    }, [dispatch, pageSize, filter.term])
+    }, [dispatch, pageSize, filter])
     const follow = (id: number) => dispatch(followAC(id))
     const unFollow = (id: number) => dispatch(unFollowAC(id))
     const onFilterChanged = (filter: SearchFilterType) => {

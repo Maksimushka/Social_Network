@@ -1,8 +1,9 @@
 import React from 'react';
-import {Field, useFormik} from 'formik';
-import {Button} from 'antd';
+import {useFormik} from 'formik';
+import {Button, Input, Select} from 'antd';
 import {SearchFilterType} from '../../Redux/users-page/users-actions';
 
+const {Option} = Select
 
 type UsersSearchFormProps = {
     onFilterChanged: (filter: SearchFilterType) => void
@@ -20,15 +21,21 @@ const UsersSearchForm = React.memo(({onFilterChanged, filter}: UsersSearchFormPr
             onFilterChanged(filter)
         }
     })
+    const handleSelectChange = (value: string) => {
+        formik.setFieldValue("friend", value);
+    };
     return (
         <div>
             <form style={{width: '500', display: 'flex'}} onSubmit={formik.handleSubmit}>
-                <Field type="text" name="term"/>
-                <Field name="friend" as="select">
-                    <option value="null">All</option>
-                    <option value="true">Followed</option>
-                    <option value="false">Unfollowed</option>
-                </Field>
+                <Input {...formik.getFieldProps('value')} />
+                <Select
+                    value={formik.values.friend}
+                    onChange={handleSelectChange}
+                >
+                    <Option value="null">All</Option>
+                    <Option value="true">Followed</Option>
+                    <Option value="false">Unfollowed</Option>
+                </Select>
                 <Button htmlType='submit'>Search</Button>
             </form>
         </div>
