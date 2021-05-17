@@ -1,12 +1,13 @@
 import {
     FollowACType,
-    setCurrentPageACType, setFollowingACType,
+    setCurrentPageACType, setFilterACType, setFollowingACType,
     setIsFetchingACType,
     setUsersACType,
     setUsersCountACType,
     unFollowACType
 } from './users-actions';
 import {updateObjectInArray} from '../../common/helpers';
+import {boolean} from 'yup';
 
 export enum ActionTypes {
     SET_IS_FETCHING = 'SET_IS_FETCHING',
@@ -16,11 +17,12 @@ export enum ActionTypes {
     UNFOLLOW = 'UNFOLLOW',
     FOLLOW = 'FOLLOW',
     FOLLOWING_IN_PROGRESS = 'FOLLOWING_IN_PROGRESS',
+    SET_FILTER = 'SET_FILTER',
 }
 
 type ActionType = FollowACType | unFollowACType | setUsersACType |
     setCurrentPageACType | setUsersCountACType | setIsFetchingACType |
-    setFollowingACType
+    setFollowingACType | setFilterACType
 export type UsersType = {
     id: number
     name: string
@@ -39,6 +41,10 @@ export type UsersReducerType = {
     currentPage: number
     isFetching: boolean
     followingInProgress: [] | number[]
+    filter: {
+        term: string
+        friend: null | boolean
+    }
 }
 
 let initialState: UsersReducerType = {
@@ -47,7 +53,11 @@ let initialState: UsersReducerType = {
     totalUsersCount: 23,
     isFetching: true,
     currentPage: 1,
-    followingInProgress: []
+    followingInProgress: [],
+    filter: {
+        term: '',
+        friend: null
+    }
 }
 
 export const usersReducer = (state:UsersReducerType = initialState, action: ActionType): UsersReducerType => {
@@ -77,6 +87,12 @@ export const usersReducer = (state:UsersReducerType = initialState, action: Acti
             return {
                 ...state,
                 totalUsersCount: action.usersCount
+            }
+        }
+        case ActionTypes.SET_FILTER: {
+            return {
+                ...state,
+                filter: action.payload
             }
         }
         case ActionTypes.SET_IS_FETCHING: {

@@ -19,6 +19,10 @@ export type setCurrentPageACType = {
     type: ActionTypes.SET_CURRENT_PAGE
     currentPage: number
 }
+export type setFilterACType = {
+    type: ActionTypes.SET_FILTER
+    payload: {term: string, friend: null | boolean}
+}
 export type setUsersCountACType = {
     type: ActionTypes.SET_USERS_COUNT
     usersCount: number
@@ -31,6 +35,10 @@ export type setFollowingACType = {
     type: ActionTypes.FOLLOWING_IN_PROGRESS
     isLoading: boolean
     userId: number
+}
+export type SearchFilterType = {
+    term: string,
+    friend: null | boolean
 }
 
 // ACTION CREATORS
@@ -50,6 +58,10 @@ export const setCurrentPageAC = (currentPage: number): setCurrentPageACType => (
     type: ActionTypes.SET_CURRENT_PAGE,
     currentPage
 })
+export const setFilterAC = (filter: SearchFilterType): setFilterACType => ({
+    type: ActionTypes.SET_FILTER,
+    payload: filter
+})
 export const setUsersCountAC = (usersCount: number): setUsersCountACType => ({
     type: ActionTypes.SET_USERS_COUNT,
     usersCount
@@ -65,19 +77,13 @@ export const setIsFollowingAC = (userId: number, isLoading: boolean): setFollowi
 })
 
 // THUNK CREATORS
-export const getUsers = (page: number, currentPage: number) => async (dispatch: Dispatch) => {
+export const getUsers = (page: number, currentPage: number, filter: SearchFilterType) => async (dispatch: Dispatch) => {
     dispatch(setIsFetchingAC(true))
-    let resp = await usersAPI.getUsers(page, currentPage)
+    let resp = await usersAPI.getUsers(page, currentPage, filter)
     dispatch(setCurrentPageAC(currentPage))
+    dispatch(setFilterAC(filter))
     dispatch(setUsersAC(resp.items))
     dispatch(setUsersCountAC(resp.totalCount))
-    dispatch(setIsFetchingAC(false))
-}
-export const setUsers = (currentPage: number, pageSize: number) => async (dispatch: Dispatch) => {
-    dispatch(setIsFetchingAC(true))
-    let resp = await usersAPI.changePage(currentPage, pageSize)
-    dispatch(setCurrentPageAC(currentPage))
-    dispatch(setUsersAC(resp.items))
     dispatch(setIsFetchingAC(false))
 }
 export const follow = (id: number) => async (dispatch: Dispatch) => {

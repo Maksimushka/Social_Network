@@ -1,4 +1,5 @@
 import axios from 'axios';
+import {SearchFilterType} from '../Redux/users-page/users-actions';
 
 const instance = axios.create({
     withCredentials: true,
@@ -9,12 +10,9 @@ const instance = axios.create({
 })
 
 export const usersAPI = {
-    getUsers(pageSize: number, currentPage: number) {
-        return instance.get(`users?page=${currentPage}&count=${pageSize}`)
-            .then( resp => resp.data )
-    },
-    changePage(currentPage: number, pageSize: number) {
-        return instance.get(`users?page=${currentPage}&count=${pageSize}`)
+    getUsers(pageSize: number, currentPage: number, filter: SearchFilterType) {
+        const friendUrl = filter.friend === null ? '' : `&friend=${filter.friend}`
+        return instance.get(`users?page=${currentPage}&count=${pageSize}&term=${filter.term}${friendUrl}`)
             .then( resp => resp.data )
     },
     follow(userId: number) {

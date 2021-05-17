@@ -4,7 +4,7 @@ import User from './User';
 import {useDispatch, useSelector} from 'react-redux';
 import {RootStoreType} from '../../Redux/redux-store';
 import {UsersReducerType} from '../../Redux/users-page/users-reducer';
-import {followAC, getUsers, setUsers, unFollowAC} from '../../Redux/users-page/users-actions';
+import {followAC, getUsers, SearchFilterType, setFilterAC, unFollowAC} from '../../Redux/users-page/users-actions';
 import container from './../../common/container.module.css'
 import s from './Users.module.scss'
 import UsersSearchForm from './UsersSearchForm';
@@ -13,23 +13,22 @@ import {Preloader} from '../common/Preloader/Preloader';
 const Users: React.FC = React.memo(() => {
     const dispatch = useDispatch()
     const {
-        currentPage,
-        totalUsersCount,
-        pageSize,
-        users,
-        isFetching,
-        followingInProgress
+        currentPage, totalUsersCount,
+        pageSize, users, filter,
+        isFetching, followingInProgress
     } = useSelector<RootStoreType, UsersReducerType>((state) => state.usersPage)
-    const onChangePage = useCallback((currentPage: number) => {
-        dispatch(setUsers(currentPage, pageSize))
-    }, [dispatch, pageSize])
-
     useEffect(() => {
-        dispatch(getUsers(pageSize, currentPage))
+        dispatch(getUsers(pageSize, currentPage, filter))
     }, [])
 
-    const follow = useCallback((id: number) => dispatch(followAC(id)), [dispatch])
-    const unFollow = useCallback((id: number) => dispatch(unFollowAC(id)), [dispatch])
+    const onChangePage = useCallback((currentPage: number) => {
+        dispatch(getUsers(pageSize, currentPage, filter))
+    }, [dispatch, pageSize, filter.term])
+    const follow = (id: number) => dispatch(followAC(id))
+    const unFollow = (id: number) => dispatch(unFollowAC(id))
+    const onFilterChanged = (filter: SearchFilterType) => {
+        dispatch(getUsers(pageSize, 1, filter))
+    }
 
     const usersStyle = `${container.container} ${s.container}`
     return (
@@ -38,7 +37,7 @@ const Users: React.FC = React.memo(() => {
                 ? <Preloader/>
                 : <div className={s.usersBlock}>
                     <div className={usersStyle}>
-                        <UsersSearchForm/>
+                        <UsersSearchForm filter={filter} onFilterChanged={onFilterChanged}/>
                         <Paginator
                             pageSize={pageSize} totalItemsCount={totalUsersCount}
                             currentPage={currentPage} onChangePage={onChangePage}/>
