@@ -2,16 +2,21 @@ import React from 'react';
 import {useFormik} from 'formik';
 import {Button, Input, Select} from 'antd';
 import {SearchFilterType} from '../../Redux/users-page/users-actions';
+import {useSelector} from 'react-redux';
+import {RootStoreType} from '../../Redux/redux-store';
+import {UsersReducerType} from '../../Redux/users-page/users-reducer';
 
 const {Option} = Select
 
 type UsersSearchFormProps = {
     onFilterChanged: (filter: SearchFilterType) => void
-    filter: SearchFilterType
 }
 
-const UsersSearchForm = React.memo(({onFilterChanged, filter}: UsersSearchFormProps) => {
+const UsersSearchForm = React.memo(({onFilterChanged}: UsersSearchFormProps) => {
+    const {filter} = useSelector<RootStoreType, UsersReducerType>((state) => state.usersPage)
+
     const formik = useFormik({
+        enableReinitialize: true,
         initialValues: {value: filter.term, friend: String(filter.friend)},
         onSubmit: values => {
             const filter = {

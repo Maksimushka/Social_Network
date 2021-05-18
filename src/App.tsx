@@ -3,7 +3,7 @@ import './App.scss';
 import Settings from './components/Settings/Settings'
 import {NavLink, Route} from 'react-router-dom';
 import DialogsContainer from './components/Dialogs/DialogsContainer';
-import ProfileContainer from './components/Profile/ProfileContainer';
+import ProfileContainer from './components/Profile/Profile';
 import Login from './components/Login/Login';
 import {useDispatch, useSelector} from 'react-redux';
 import {initializeApp} from './Redux/app-reducer';
@@ -67,7 +67,7 @@ const App = () => {
                         }}>
                         <Route exact path="/" render={() => <Redirect to="/profile"/>}/>
                         <Route path="/login" render={() => <Login/>}/>
-                        <Route path="/profile/:userId?" render={() => <ProfileContainer/>}/>
+                        <Route path="/profile/:id?" render={() => <ProfileContainer/>}/>
                         <Route path="/dialogs" render={() => <DialogsContainer/>}/>
                         <Route path="/users" render={() => <Users/>}/>
                         <Route path="/settings" render={() => <Settings/>}/>
